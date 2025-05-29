@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Products - Sandeep Sahul Fitness Factory</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#FF0000',secondary:'#333333'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+}
+.product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+.product-card:hover .add-to-cart {
+  opacity: 1;
+}
+.add-to-cart {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.price-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #FF0000;
+  cursor: pointer;
+}
+.price-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #FF0000;
+  cursor: pointer;
+}
+@keyframes skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+</style>
+</head>
+<body class="bg-gray-50">
+<!-- Header -->
+<header class="bg-white shadow-md fixed w-full top-0 z-50">
+  <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center">
+      <a href="https://readdy.ai/home/1c17c62c-55c5-4300-a1cb-c5eefeed5abf/738663c3-f51b-437a-be81-69e2c79f6878" data-readdy="true" class="w-8 h-8 flex items-center justify-center mr-3 cursor-pointer">
+        <i class="ri-arrow-left-line ri-lg"></i>
+      </a>
+      <h1 class="text-xl font-bold">All Products</h1>
+    </div>
+    <div class="flex items-center space-x-3">
+      <button id="search-toggle" class="w-8 h-8 flex items-center justify-center cursor-pointer">
+        <i class="ri-search-line ri-lg"></i>
+      </button>
+      <button id="filter-toggle" class="w-8 h-8 flex items-center justify-center cursor-pointer">
+        <i class="ri-filter-3-line ri-lg"></i>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Search Bar (Hidden by default) -->
+  <div id="search-bar" class="max-w-md mx-auto px-4 py-2 hidden">
+    <div class="relative">
+      <input type="text" id="product-search" placeholder="Search products..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-button focus:outline-none focus:ring-2 focus:ring-primary">
+      <div class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center text-gray-400">
+        <i class="ri-search-line"></i>
+      </div>
+      <button id="clear-search" class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center text-gray-400 cursor-pointer hidden">
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Breadcrumb -->
+  <div class="max-w-md mx-auto px-4 py-2 flex items-center text-xs text-gray-500">
+    <a href="https://readdy.ai/home/1c17c62c-55c5-4300-a1cb-c5eefeed5abf/738663c3-f51b-437a-be81-69e2c79f6878" data-readdy="true" class="hover:text-primary cursor-pointer">Home</a>
+    <i class="ri-arrow-right-s-line mx-1"></i>
+    <a href="#store" class="hover:text-primary cursor-pointer">Store</a>
+    <i class="ri-arrow-right-s-line mx-1"></i>
+    <span class="text-primary font-medium">All Products</span>
+  </div>
+</header>
+
+<!-- Filter Panel (Hidden by default) -->
+<div id="filter-panel" class="fixed inset-0 z-40 hidden">
+  <div class="absolute inset-0 bg-black bg-opacity-50" id="filter-backdrop"></div>
+  <div class="absolute bottom-0 left-0 right-0 max-w-md mx-auto bg-white rounded-t-xl transform transition-transform duration-300 translate-y-full" id="filter-content">
+    <div class="p-4 border-b flex justify-between items-center">
+      <h3 class="text-lg font-bold">Filter & Sort</h3>
+      <button id="close-filter" class="w-8 h-8 flex items-center justify-center text-gray-500 cursor-pointer">
+        <i class="ri-close-line ri-lg"></i>
+      </button>
+    </div>
+    
+    <div class="p-4 max-h-[500px] overflow-y-auto">
+      <!-- Categories -->
+      <div class="mb-6">
+        <h4 class="font-bold mb-3">Categories</h4>
+        <div class="space-y-2">
+          <label class="flex items-center">
+            <input type="radio" name="category" value="all" checked class="w-4 h-4 text-primary">
+            <span class="ml-2">All Products</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" name="category" value="supplements" class="w-4 h-4 text-primary">
+            <span class="ml-2">Supplements</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" name="category" value="apparel" class="w-4 h-4 text-primary">
+            <span class="ml-2">Apparel</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" name="category" value="equipment" class="w-4 h-4 text-primary">
+            <span class="ml-2">Equipment</span>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Price Range -->
+      <div class="mb-6">
+        <h4 class="font-bold mb-3">Price Range</h4>
+        <div class="px-2">
+          <input type="range" id="price-range" min="0" max="5000" value="5000" class="price-slider w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer">
+          <div class="flex justify-between mt-2 text-sm">
+            <span>₹0</span>
+            <span id="price-value">₹5000+</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sort Options -->
+      <div class="mb-6">
+        <h4 class="font-bold mb-3">Sort By</h4>
+        <div class="space-y-2">
+          <label class="flex items-center">
+            <input type="radio" name="sort" value="popularity" checked class="w-4 h-4 text-primary">
+            <span class="ml-2">Popularity</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" name="sort" value="price-low" class="w-4 h-4 text-primary">
+            <span class="ml-2">Price: Low to High</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" name="sort" value="price-high" class="w-4 h-4 text-primary">
+            <span class="ml-2">Price: High to Low</span>
+          </label>
+          <label class="flex items-center">
+            <input type="radio" name="sort" value="newest" class="w-4 h-4 text-primary">
+            <span class="ml-2">Newest First</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    
+    <div class="p-4 border-t flex space-x-3">
+      <button id="reset-filters" class="flex-1 py-3 border border-gray-300 rounded-button font-semibold hover:bg-gray-50 transition-colors cursor-pointer">Reset</button>
+      <button id="apply-filters" class="flex-1 bg-primary text-white py-3 rounded-button font-semibold hover:bg-red-700 transition-colors cursor-pointer">Apply</button>
+    </div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<main class="pt-28 pb-16 max-w-md mx-auto px-4">
+  <!-- Active Filters -->
+  <div id="active-filters" class="flex items-center flex-wrap gap-2 mb-4 hidden">
+    <span class="text-sm font-medium">Active Filters:</span>
+    <button class="filter-tag bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs flex items-center">
+      Supplements <i class="ri-close-line ml-1"></i>
+    </button>
+    <button class="filter-tag bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs flex items-center">
+      Under ₹2000 <i class="ri-close-line ml-1"></i>
+    </button>
+    <button id="clear-all-filters" class="text-primary text-xs font-medium ml-auto">Clear All</button>
+  </div>
+
+  <!-- Products Grid -->
+  <div id="products-container">
+    <!-- Loading Skeleton -->
+    <div id="loading-skeleton" class="grid grid-cols-2 gap-4">
+      <div class="skeleton-card bg-white rounded-lg overflow-hidden shadow-sm">
+        <div class="skeleton h-40"></div>
+        <div class="p-3">
+          <div class="skeleton h-4 w-3/4 rounded mb-2"></div>
+          <div class="skeleton h-3 w-1/2 rounded mb-3"></div>
+          <div class="flex justify-between items-center">
+            <div class="skeleton h-5 w-16 rounded"></div>
+            <div class="skeleton h-8 w-8 rounded-full"></div>
+          </div>
+        </div>
+      </div>
+      <div class="skeleton-card bg-white rounded-lg overflow-hidden shadow-sm">
+        <div class="skeleton h-40"></div>
+        <div class="p-3">
+          <div class="skeleton h-4 w-3/4 rounded mb-2"></div>
+          <div class="skeleton h-3 w-1/2 rounded mb-3"></div>
+          <div class="flex justify-between items-center">
+            <div class="skeleton h-5 w-16 rounded"></div>
+            <div class="skeleton h-8 w-8 rounded-full"></div>
+          </div>
+        </div>
+      </div>
+      <div class="skeleton-card bg-white rounded-lg overflow-hidden shadow-sm">
+        <div class="skeleton h-40"></div>
+        <div class="p-3">
+          <div class="skeleton h-4 w-3/4 rounded mb-2"></div>
+          <div class="skeleton h-3 w-1/2 rounded mb-3"></div>
+          <div class="flex justify-between items-center">
+            <div class="skeleton h-5 w-16 rounded"></div>
+            <div class="skeleton h-8 w-8 rounded-full"></div>
+          </div>
+        </div>
+      </div>
+      <div class="skeleton-card bg-white rounded-lg overflow-hidden shadow-sm">
+        <div class="skeleton h-40"></div>
+        <div class="p-3">
+          <div class="skeleton h-4 w-3/4 rounded mb-2"></div>
+          <div class="skeleton h-3 w-1/2 rounded mb-3"></div>
+          <div class="flex justify-between items-center">
+            <div class="skeleton h-5 w-16 rounded"></div>
+            <div class="skeleton h-8 w-8 rounded-full"></div>
+          </div>
+        </div>
+      </div>
+      <div class="skeleton-card bg-white rounded-lg overflow-hidden shadow-sm">
+        <div class="skeleton h-40"></div>
+        <div class="p-3">
+          <div class="skeleton h-4 w-3/4 rounded mb-2"></div>
+          <div class="skeleton h-3 w-1/2 rounded mb-3"></div>
+          <div class="flex justify-between items-center">
+            <div class="skeleton h-5 w-16 rounded"></div>
+            <div class="skeleton h-8 w-8 rounded-full"></div>
+          </div>
+        </div>
+      </div>
+      <div class="skeleton-card bg-white rounded-lg overflow-hidden shadow-sm">
+        <div class="skeleton h-40"></div>
+        <div class="p-3">
+          <div class="skeleton h-4 w-3/4 rounded mb-2"></div>
+          <div class="skeleton h-3 w-1/2 rounded mb-3"></div>
+          <div class="flex justify-between items-center">
+            <div class="skeleton h-5 w-16 rounded"></div>
+            <div class="skeleton h-8 w-8 rounded-full"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Products Grid (Hidden until loaded) -->
+    <div id="products-grid" class="grid grid-cols-2 gap-4 hidden">
+      <!-- Product 1 -->
+      <div class="product-card bg-white rounded-lg shadow-md overflow-hidden" data-category="supplements" data-price="2499" data-date="2025-05-01">
+        <div class="relative">
+          <div class="h-40 overflow-hidden">
+            <img src="https://readdy.ai/api/search-image?query=whey%2520protein%2520powder%2520container%252C%2520professional%2520product%2520photography%252C%2520clean%2520white%2520background%252C%2520fitness%2520supplement%252C%2520high%2520quality%2520packaging%252C%2520detailed%2520product%2520shot&width=180&height=160&seq=7&orientation=squarish" alt="Whey Protein" class="w-full h-full object-cover">
+          </div>
+          <div class="absolute top-2 right-2 bg-primary text-white text-xs font-bold px-2 py-1 rounded">NEW</div>
+        </div>
+        <div class="p-3">
+          <h3 class="font-bold text-sm mb-1 truncate">Premium Whey Protein</h3>
+          <p class="text-gray-600 text-xs mb-2">1kg, Chocolate</p>
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-primary">₹2,499</span>
+            <button class="add-to-cart w-8 h-8 flex items-center justify-center bg-black text-white rounded-full cursor-pointer">
+              <i class="ri-shopping-cart-line"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 2 -->
+      <div class="product-card bg-white rounded-lg shadow-md overflow-hidden" data-category="apparel" data-price="899" data-date="2025-05-10">
+        <div class="h-40 overflow-hidden">
+          <img src="https://readdy.ai/api/search-image?query=fitness%2520t-shirt%252C%2520black%2520with%2520red%2520logo%252C%2520athletic%2520wear%252C%2520gym%2520apparel%252C%2520professional%2520product%2520photography%252C%2520clean%2520white%2520background&width=180&height=160&seq=8&orientation=squarish" alt="Gym T-Shirt" class="w-full h-full object-cover">
+        </div>
+        <div class="p-3">
+          <h3 class="font-bold text-sm mb-1 truncate">Performance T-Shirt</h3>
+          <p class="text-gray-600 text-xs mb-2">Black, Size M</p>
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-primary">₹899</span>
+            <button class="add-to-cart w-8 h-8 flex items-center justify-center bg-black text-white rounded-full cursor-pointer">
+              <i class="ri-shopping-cart-line"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 3 -->
+      <div class="product-card bg-white rounded-lg shadow-md overflow-hidden" data-category="equipment" data-price="499" data-date="2025-05-15">
+        <div class="h-40 overflow-hidden">
+          <img src="https://readdy.ai/api/search-image?query=gym%2520shaker%2520bottle%252C%2520black%2520and%2520red%2520colors%252C%2520protein%2520shaker%2520with%2520mixing%2520ball%252C%2520fitness%2520accessory%252C%2520professional%2520product%2520photography%252C%2520clean%2520white%2520background&width=180&height=160&seq=9&orientation=squarish" alt="Shaker Bottle" class="w-full h-full object-cover">
+        </div>
+        <div class="p-3">
+          <h3 class="font-bold text-sm mb-1 truncate">Premium Shaker Bottle</h3>
+          <p class="text-gray-600 text-xs mb-2">700ml, Black/Red</p>
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-primary">₹499</span>
+            <button class="add-to-cart w-8 h-8 flex items-center justify-center bg-black text-white rounded-full cursor-pointer">
+              <i class="ri-shopping-cart-line"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 4 -->
+      <div class="product-card bg-white rounded-lg shadow-md overflow-hidden" data-category="supplements" data-price="1799" data-date="2025-05-05">
+        <div class="h-40 overflow-hidden">
+          <img src="https://readdy.ai/api/search-image?query=pre-workout%2520supplement%2520container%252C%2520energy%2520formula%252C%2520professional%2520product%2520photography%252C%2520clean%2520white%2520background%252C%2520fitness%2520supplement%252C%2520high%2520quality%2520packaging&width=180&height=160&seq=10&orientation=squarish" alt="Pre-Workout" class="w-full h-full object-cover">
+        </div>
+        <div class="p-3">
+          <h3 class="font-bold text-sm mb-1 truncate">Extreme Pre-Workout</h3>
+          <p class="text-gray-600 text-xs mb-2">300g, Berry Blast</p>
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-primary">₹1,799</span>
+            <button class="add-to-cart w-8 h-8 flex items-center justify-center bg-black text-white rounded-full cursor-pointer">
+              <i class="ri-shopping-cart-line"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 5 -->
+      <div class="product-card bg-white rounded-lg shadow-md overflow-hidden" data-category="apparel" data-price="799" data-date="2025-05-20">
+        <div class="h-40 overflow-hidden">
+          <img src="https://readdy.ai/api/search-image?query=fitness%2520gym%2520shorts%252C%2520black%2520with%2520red%2520details%252C%2520athletic%2520wear%252C%2520workout%2520shorts%252C%2520professional%2520product%2520photography%252C%2520clean%2520white%2520background&width=180&height=160&seq=11&orientation=squarish" alt="Gym Shorts" class="w-full h-full object-cover">
+        </div>
+        <div class="p-3">
+          <h3 class="font-bold text-sm mb-1 truncate">Training Shorts</h3>
+          <p class="text-gray-600 text-xs mb-2">Black, Size L</p>
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-primary">₹799</span>
+            <button class="add-to-cart w-8 h-8 flex items-center justify-center bg-black text-white rounded-full cursor-pointer">
+              <i class="ri-shopping-cart-line"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 6 -->
+      <div class="product-card bg-white rounded-lg shadow-md overflow-hidden" data-category="equipment" data-price="1299" data-date="2025-05-12">
+        <div class="h-40 overflow-hidden">
+          <img src="https://readdy.ai/api/search-image?query=fitness%2520resistance%2520bands%2520set%252C%2520elastic%2520exercise%2520bands%2520with%2520different%2520resistance%2520levels%252C%2520workout%2520equipment%252C%2520professional%2520product%2520photography%252C%2520clean%2520white%2520background&width=180&height=160&seq=12&orientation=squarish" alt="Resistance Bands" class="w-full h-full object-cover">
+        </div>
+        <div class="p-3">
+          <h3 class="font-bold text-sm mb-1 truncate">Resistance Bands Set</h3>
+          <p class="text-gray-600 text-xs mb-2">5 Levels, With Bag</p>
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-primary">₹1,299</span>
+            <button class="add-to-cart w-8 h-8 flex items-center justify-center bg-black text-white rounded-full cursor-pointer">
+              <i class="ri-shopping-cart-line"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 7 -->
+      <div class="product-card bg-white rounded-lg shadow-md overflow-hidden" data-category="supplements" data-price="1299" data-date="2025-05-18">
+        <div class="h-40 overflow-hidden">
+          <img src="https://readdy.ai/api/search-image?query=BCAA%2520amino%2520acids%2520supplement%2520container%252C%2520professional%2520product%2520photography%252C%2520clean%2520white%2520background%252C%2520fitness%2520supplement%252C%2520high%2520quality%2520packaging%252C%2520detailed%2520product%2520shot&width=180&height=160&seq=16&orientation=squarish" alt="BCAA Supplement" class="w-full h-full object-cover">
+        </div>
+        <div class="p-3">
+          <h3 class="font-bold text-sm mb-1 truncate">BCAA Amino Acids</h3>
+          <p class="text-gray-600 text-xs mb-2">400g, Watermelon</p>
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-primary">₹1,299</span>
+            <button class="add-to-cart w-8 h-8 flex items-center justify-center bg-black text-white rounded-full cursor-pointer">
+              <i class="ri-shopping-cart-line"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 8 -->
+      <div class="product-card bg-white rounded-lg shadow-md overflow-hidden" data-category="equipment" data-price="2999" data-date="2025-05-22">
+        <div class="h-40 overflow-hidden">
+          <img src="https://readdy.ai/api/search-image?query=adjustable%2520dumbbell%2520set%252C%2520professional%2520product%2520photography%252C%2520clean%2520white%2520background%252C%2520fitness%2520equipment%252C%2520high%2520quality%2520product%2520shot&width=180&height=160&seq=17&orientation=squarish" alt="Adjustable Dumbbells" class="w-full h-full object-cover">
+        </div>
+        <div class="p-3">
+          <h3 class="font-bold text-sm mb-1 truncate">Adjustable Dumbbells</h3>
+          <p class="text-gray-600 text-xs mb-2">2-10kg, Pair</p>
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-primary">₹2,999</span>
+            <button class="add-to-cart w-8 h-8 flex items-center justify-center bg-black text-white rounded-full cursor-pointer">
+              <i class="ri-shopping-cart-line"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 9 -->
+      <div class="product-card bg-white rounded-lg shadow-md overflow-hidden" data-category="apparel" data-price="1499" data-date="2025-05-25">
+        <div class="h-40 overflow-hidden">
+          <img src="https://readdy.ai/api/search-image?query=fitness%2520hoodie%252C%2520black%2520with%2520red%2520logo%252C%2520athletic%2520wear%252C%2520gym%2520apparel%252C%2520professional%2520product%2520photography%252C%2520clean%2520white%2520background&width=180&height=160&seq=18&orientation=squarish" alt="Gym Hoodie" class="w-full h-full object-cover">
+        </div>
+        <div class="p-3">
+          <h3 class="font-bold text-sm mb-1 truncate">Performance Hoodie</h3>
+          <p class="text-gray-600 text-xs mb-2">Black, Size L</p>
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-primary">₹1,499</span>
+            <button class="add-to-cart w-8 h-8 flex items-center justify-center bg-black text-white rounded-full cursor-pointer">
+              <i class="ri-shopping-cart-line"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 10 -->
+      <div class="product-card bg-white rounded-lg shadow-md overflow-hidden" data-category="supplements" data-price="999" data-date="2025-05-08">
+        <div class="h-40 overflow-hidden">
+          <img src="https://readdy.ai/api/search-image?query=multivitamin%2520supplement%2520bottle%252C%2520professional%2520product%2520photography%252C%2520clean%2520white%2520background%252C%2520fitness%2520supplement%252C%2520high%2520quality%2520packaging%252C%2520detailed%2520product%2520shot&width=180&height=160&seq=19&orientation=squarish" alt="Multivitamins" class="w-full h-full object-cover">
+        </div>
+        <div class="p-3">
+          <h3 class="font-bold text-sm mb-1 truncate">Complete Multivitamin</h3>
+          <p class="text-gray-600 text-xs mb-2">90 Tablets</p>
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-primary">₹999</span>
+            <button class="add-to-cart w-8 h-8 flex items-center justify-center bg-black text-white rounded-full cursor-pointer">
+              <i class="ri-shopping-cart-line"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 11 -->
+      <div class="product-card bg-white rounded-lg shadow-md overflow-hidden" data-category="equipment" data-price="599" data-date="2025-05-14">
+        <div class="h-40 overflow-hidden">
+          <img src="https://readdy.ai/api/search-image?query=gym%2520gloves%252C%2520black%2520and%2520red%252C%2520fitness%2520accessory%252C%2520weight%2520lifting%2520gloves%252C%2520professional%2520product%2520photography%252C%2520clean%2520white%2520background&width=180&height=160&seq=20&orientation=squarish" alt="Gym Gloves" class="w-full h-full object-cover">
+        </div>
+        <div class="p-3">
+          <h3 class="font-bold text-sm mb-1 truncate">Weight Lifting Gloves</h3>
+          <p class="text-gray-600 text-xs mb-2">Medium, Black/Red</p>
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-primary">₹599</span>
+            <button class="add-to-cart w-8 h-8 flex items-center justify-center bg-black text-white rounded-full cursor-pointer">
+              <i class="ri-shopping-cart-line"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product 12 -->
+      <div class="product-card bg-white rounded-lg shadow-md overflow-hidden" data-category="apparel" data-price="1299" data-date="2025-05-27">
+        <div class="relative">
+          <div class="h-40 overflow-hidden">
+            <img src="https://readdy.ai/api/search-image?query=fitness%2520leggings%252C%2520black%2520with%2520red%2520details%252C%2520athletic%2520wear%252C%2520gym%2520apparel%252C%2520professional%2520product%2520photography%252C%2520clean%2520white%2520background&width=180&height=160&seq=21&orientation=squarish" alt="Gym Leggings" class="w-full h-full object-cover">
+          </div>
+          <div class="absolute top-2 right-2 bg-primary text-white text-xs font-bold px-2 py-1 rounded">NEW</div>
+        </div>
+        <div class="p-3">
+          <h3 class="font-bold text-sm mb-1 truncate">Performance Leggings</h3>
+          <p class="text-gray-600 text-xs mb-2">Black, Size M</p>
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-primary">₹1,299</span>
+            <button class="add-to-cart w-8 h-8 flex items-center justify-center bg-black text-white rounded-full cursor-pointer">
+              <i class="ri-shopping-cart-line"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Empty State (Hidden by default) -->
+    <div id="empty-state" class="py-16 text-center hidden">
+      <div class="w-16 h-16 mx-auto flex items-center justify-center bg-gray-100 rounded-full mb-4">
+        <i class="ri-search-line ri-2x text-gray-400"></i>
+      </div>
+      <h3 class="text-lg font-bold mb-2">No products found</h3>
+      <p class="text-gray-500 mb-6">We couldn't find any products matching your criteria.</p>
+      <button id="clear-filters-empty" class="bg-primary text-white px-6 py-2 rounded-button font-medium hover:bg-red-700 transition-colors cursor-pointer">Clear Filters</button>
+    </div>
+  </div>
+  
+  <!-- Load More Button -->
+  <div class="mt-8 text-center">
+    <button id="load-more" class="bg-white border border-gray-300 text-gray-700 px-6 py-3 rounded-button font-semibold hover:bg-gray-50 transition-colors cursor-pointer flex items-center justify-center mx-auto">
+      <span>Load More</span>
+      <i class="ri-arrow-down-line ml-2"></i>
+    </button>
+  </div>
+</main>
+
+<!-- Tab Bar -->
+<nav class="bg-black text-white fixed w-full bottom-0 z-50">
+  <div class="grid grid-cols-5 max-w-md mx-auto">
+    <a href="https://readdy.ai/home/1c17c62c-55c5-4300-a1cb-c5eefeed5abf/738663c3-f51b-437a-be81-69e2c79f6878" data-readdy="true" class="flex flex-col items-center justify-center py-2 text-gray-400">
+      <div class="w-6 h-6 flex items-center justify-center">
+        <i class="ri-home-5-line ri-lg"></i>
+      </div>
+      <span class="text-xs mt-1">Home</span>
+    </a>
+    <a href="#services" class="flex flex-col items-center justify-center py-2 text-gray-400">
+      <div class="w-6 h-6 flex items-center justify-center">
+        <i class="ri-service-line ri-lg"></i>
+      </div>
+      <span class="text-xs mt-1">Services</span>
+    </a>
+    <a href="#tools" class="flex flex-col items-center justify-center py-2 text-gray-400">
+      <div class="w-6 h-6 flex items-center justify-center">
+        <i class="ri-calculator-line ri-lg"></i>
+      </div>
+      <span class="text-xs mt-1">Tools</span>
+    </a>
+    <a href="#store" class="flex flex-col items-center justify-center py-2 text-primary">
+      <div class="w-6 h-6 flex items-center justify-center">
+        <i class="ri-shopping-bag-fill ri-lg"></i>
+      </div>
+      <span class="text-xs mt-1">Shop</span>
+    </a>
+    <a href="#contact" class="flex flex-col items-center justify-center py-2 text-gray-400">
+      <div class="w-6 h-6 flex items-center justify-center">
+        <i class="ri-chat-1-line ri-lg"></i>
+      </div>
+      <span class="text-xs mt-1">Contact</span>
+    </a>
+  </div>
+</nav>
+
+<!-- Cart Modal -->
+<div id="cart-modal" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 bg-black bg-opacity-50" id="cart-backdrop"></div>
+  <div class="absolute bottom-0 left-0 right-0 max-w-md mx-auto bg-white rounded-t-xl transform transition-transform duration-300 translate-y-full" id="cart-content">
+    <div class="p-4 border-b">
+      <div class="flex justify-between items-center">
+        <h3 class="text-xl font-bold">Your Cart</h3>
+        <button id="close-cart" class="w-8 h-8 flex items-center justify-center text-gray-500 cursor-pointer">
+          <i class="ri-close-line ri-lg"></i>
+        </button>
+      </div>
+    </div>
+    <div class="p-4 max-h-[400px] overflow-y-auto" id="cart-items">
+      <div class="text-center py-8 text-gray-500">
+        <div class="w-16 h-16 mx-auto flex items-center justify-center bg-gray-100 rounded-full mb-4">
+          <i class="ri-shopping-cart-line ri-2x"></i>
+        </div>
+        <p>Your cart is empty</p>
+      </div>
+    </div>
+    <div class="p-4 border-t">
+      <div class="flex justify-between items-center mb-4">
+        <span class="font-bold">Total:</span>
+        <span class="font-bold text-primary text-xl" id="cart-total">₹0</span>
+      </div>
+      <button class="w-full bg-primary text-white py-3 rounded-button font-semibold hover:bg-red-700 transition-colors cursor-pointer">CHECKOUT</button>
+    </div>
+  </div>
+</div>
+
+<!-- Success Toast -->
+<div id="success-toast" class="fixed top-16 left-0 right-0 max-w-md mx-auto bg-green-500 text-white p-4 rounded-lg shadow-lg transform transition-transform duration-300 translate-y-[-200%] opacity-0 z-50">
+  <div class="flex items-center">
+    <div class="w-6 h-6 flex items-center justify-center mr-3">
+      <i class="ri-check-line ri-lg"></i>
+    </div>
+    <p id="toast-message">Item added to cart!</p>
+  </div>
+</div>
+
+<!-- Header Script -->
+<script id="header-script">
+document.addEventListener('DOMContentLoaded', function() {
+  const searchToggle = document.getElementById('search-toggle');
+  const searchBar = document.getElementById('search-bar');
+  const productSearch = document.getElementById('product-search');
+  const clearSearch = document.getElementById('clear-search');
+  
+  searchToggle.addEventListener('click', () => {
+    searchBar.classList.toggle('hidden');
+    if (!searchBar.classList.contains('hidden')) {
+      productSearch.focus();
+    }
+  });
+  
+  productSearch.addEventListener('input', () => {
+    if (productSearch.value.length > 0) {
+      clearSearch.classList.remove('hidden');
+    } else {
+      clearSearch.classList.add('hidden');
+    }
+    filterProducts();
+  });
+  
+  clearSearch.addEventListener('click', () => {
+    productSearch.value = '';
+    clearSearch.classList.add('hidden');
+    filterProducts();
+  });
+  
+  function filterProducts() {
+    const searchTerm = productSearch.value.toLowerCase();
+    const products = document.querySelectorAll('.product-card');
+    let hasResults = false;
+    
+    products.forEach(product => {
+      const title = product.querySelector('h3').textContent.toLowerCase();
+      const description = product.querySelector('p').textContent.toLowerCase();
+      
+      if (title.includes(searchTerm) || description.includes(searchTerm) || searchTerm === '') {
+        product.classList.remove('hidden');
+        hasResults = true;
+      } else {
+        product.classList.add('hidden');
+      }
+    });
+    
+    // Show/hide empty state
+    const emptyState = document.getElementById('empty-state');
+    const productsGrid = document.getElementById('products-grid');
+    const loadMoreBtn = document.getElementById('load-more');
+    
+    if (!hasResults) {
+      emptyState.classList.remove('hidden');
+      productsGrid.classList.add('hidden');
+      loadMoreBtn.classList.add('hidden');
+    } else {
+      emptyState.classList.add('hidden');
+      productsGrid.classList.remove('hidden');
+      loadMoreBtn.classList.remove('hidden');
+    }
+  }
+});
+</script>
+
+<!-- Filter Script -->
+<script id="filter-script">
+document.addEventListener('DOMContentLoaded', function() {
+  const filterToggle = document.getElementById('filter-toggle');
+  const filterPanel = document.getElementById('filter-panel');
+  const filterContent = document.getElementById('filter-content');
+  const filterBackdrop = document.getElementById('filter-backdrop');
+  const closeFilter = document.getElementById('close-filter');
+  const applyFilters = document.getElementById('apply-filters');
+  const resetFilters = document.getElementById('reset-filters');
+  const priceRange = document.getElementById('price-range');
+  const priceValue = document.getElementById('price-value');
+  const activeFilters = document.getElementById('active-filters');
+  const clearAllFilters = document.getElementById('clear-all-filters');
+  const clearFiltersEmpty = document.getElementById('clear-filters-empty');
+  
+  // Update price range display
+  priceRange.addEventListener('input', () => {
+    const value = priceRange.value;
+    priceValue.textContent = value >= 5000 ? '₹5000+' : `₹${value}`;
+  });
+  
+  // Open filter panel
+  filterToggle.addEventListener('click', () => {
+    filterPanel.classList.remove('hidden');
+    setTimeout(() => {
+      filterContent.classList.remove('translate-y-full');
+    }, 10);
+  });
+  
+  // Close filter panel
+  function closeFilterPanel() {
+    filterContent.classList.add('translate-y-full');
+    setTimeout(() => {
+      filterPanel.classList.add('hidden');
+    }, 300);
+  }
+  
+  closeFilter.addEventListener('click', closeFilterPanel);
+  filterBackdrop.addEventListener('click', closeFilterPanel);
+  
+  // Apply filters
+  applyFilters.addEventListener('click', () => {
+    const selectedCategory = document.querySelector('input[name="category"]:checked').value;
+    const selectedSort = document.querySelector('input[name="sort"]:checked').value;
+    const maxPrice = parseInt(priceRange.value);
+    
+    // Update active filters UI
+    updateActiveFiltersUI(selectedCategory, maxPrice);
+    
+    // Apply filters to products
+    filterAndSortProducts(selectedCategory, maxPrice, selectedSort);
+    
+    closeFilterPanel();
+  });
+  
+  // Reset filters
+  resetFilters.addEventListener('click', () => {
+    document.querySelector('input[name="category"][value="all"]').checked = true;
+    document.querySelector('input[name="sort"][value="popularity"]').checked = true;
+    priceRange.value = 5000;
+    priceValue.textContent = '₹5000+';
+    
+    // Hide active filters
+    activeFilters.classList.add('hidden');
+    
+    // Reset product display
+    const products = document.querySelectorAll('.product-card');
+    products.forEach(product => {
+      product.classList.remove('hidden');
+    });
+    
+    // Hide empty state, show products
+    document.getElementById('empty-state').classList.add('hidden');
+    document.getElementById('products-grid').classList.remove('hidden');
+    document.getElementById('load-more').classList.remove('hidden');
+  });
+  
+  // Clear all filters
+  clearAllFilters.addEventListener('click', () => {
+    resetFilters.click();
+  });
+  
+  // Clear filters from empty state
+  clearFiltersEmpty.addEventListener('click', () => {
+    resetFilters.click();
+  });
+  
+  // Update active filters UI
+  function updateActiveFiltersUI(category, maxPrice) {
+    // Clear existing filter tags
+    const existingTags = document.querySelectorAll('.filter-tag');
+    existingTags.forEach(tag => tag.remove());
+    
+    let hasFilters = false;
+    
+    // Add category filter tag if not "all"
+    if (category !== 'all') {
+      hasFilters = true;
+      const categoryTag = document.createElement('button');
+      categoryTag.className = 'filter-tag bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs flex items-center';
+      categoryTag.innerHTML = `${category.charAt(0).toUpperCase() + category.slice(1)} <i class="ri-close-line ml-1"></i>`;
+      categoryTag.addEventListener('click', () => {
+        document.querySelector('input[name="category"][value="all"]').checked = true;
+        applyFilters.click();
+      });
+      activeFilters.insertBefore(categoryTag, clearAllFilters);
+    }
+    
+    // Add price filter tag if not max
+    if (maxPrice < 5000) {
+      hasFilters = true;
+      const priceTag = document.createElement('button');
+      priceTag.className = 'filter-tag bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs flex items-center';
+      priceTag.innerHTML = `Under ₹${maxPrice} <i class="ri-close-line ml-1"></i>`;
+      priceTag.addEventListener('click', () => {
+        priceRange.value = 5000;
+        priceValue.textContent = '₹5000+';
+        applyFilters.click();
+      });
+      activeFilters.insertBefore(priceTag, clearAllFilters);
+    }
+    
+    // Show/hide active filters section
+    if (hasFilters) {
+      activeFilters.classList.remove('hidden');
+    } else {
+      activeFilters.classList.add('hidden');
+    }
+  }
+  
+  // Filter and sort products
+  function filterAndSortProducts(category, maxPrice, sortOption) {
+    const products = document.querySelectorAll('.product-card');
+    let visibleCount = 0;
+    
+    products.forEach(product => {
+      const productCategory = product.getAttribute('data-category');
+      const productPrice = parseInt(product.getAttribute('data-price'));
+      
+      // Apply category and price filters
+      if ((category === 'all' || productCategory === category) && productPrice <= maxPrice) {
+        product.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        product.classList.add('hidden');
+      }
+    });
+    
+    // Sort visible products
+    const productsGrid = document.getElementById('products-grid');
+    const productsArray = Array.from(products).filter(p => !p.classList.contains('hidden'));
+    
+    productsArray.sort((a, b) => {
+      const priceA = parseInt(a.getAttribute('data-price'));
+      const priceB = parseInt(b.getAttribute('data-price'));
+      const dateA = new Date(a.getAttribute('data-date'));
+      const dateB = new Date(b.getAttribute('data-date'));
+      
+      switch (sortOption) {
+        case 'price-low':
+          return priceA - priceB;
+        case 'price-high':
+          return priceB - priceA;
+        case 'newest':
+          return dateB - dateA;
+        default: // popularity (default order)
+          return 0;
+      }
+    });
+    
+    // Reorder elements in the DOM
+    productsArray.forEach(product => {
+      productsGrid.appendChild(product);
+    });
+    
+    // Show/hide empty state
+    const emptyState = document.getElementById('empty-state');
+    const loadMoreBtn = document.getElementById('load-more');
+    
+    if (visibleCount === 0) {
+      emptyState.classList.remove('hidden');
+      productsGrid.classList.add('hidden');
+      loadMoreBtn.classList.add('hidden');
+    } else {
+      emptyState.classList.add('hidden');
+      productsGrid.classList.remove('hidden');
+      loadMoreBtn.classList.remove('hidden');
+    }
+  }
+});
+</script>
+
+<!-- Products Script -->
+<script id="products-script">
+document.addEventListener('DOMContentLoaded', function() {
+  // Simulate loading
+  setTimeout(() => {
+    document.getElementById('loading-skeleton').classList.add('hidden');
+    document.getElementById('products-grid').classList.remove('hidden');
+  }, 1500);
+  
+  // Load more functionality
+  const loadMoreBtn = document.getElementById('load-more');
+  let currentPage = 1;
+  
+  loadMoreBtn.addEventListener('click', () => {
+    loadMoreBtn.innerHTML = '<div class="w-5 h-5 border-2 border-gray-300 border-t-primary rounded-full animate-spin mr-2"></div> Loading...';
+    
+    // Simulate loading more products
+    setTimeout(() => {
+      // In a real application, you would fetch more products from the server
+      // For this demo, we'll just hide the button after one click
+      loadMoreBtn.innerHTML = 'No More Products';
+      loadMoreBtn.disabled = true;
+      loadMoreBtn.classList.add('opacity-50', 'cursor-not-allowed');
+    }, 1500);
+  });
+  
+  // Add to cart functionality
+  const addToCartBtns = document.querySelectorAll('.add-to-cart');
+  const cartModal = document.getElementById('cart-modal');
+  const cartContent = document.getElementById('cart-content');
+  const cartBackdrop = document.getElementById('cart-backdrop');
+  const closeCartBtn = document.getElementById('close-cart');
+  const cartItems = document.getElementById('cart-items');
+  const cartTotal = document.getElementById('cart-total');
+  let cart = [];
+  
+  addToCartBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const product = btn.closest('.product-card');
+      const name = product.querySelector('h3').textContent;
+      const variant = product.querySelector('p').textContent;
+      const price = product.querySelector('.font-bold').textContent.replace('₹', '').replace(',', '');
+      const image = product.querySelector('img').src;
+      
+      // Add to cart
+      cart.push({
+        name,
+        variant,
+        price: parseInt(price),
+        image,
+        quantity: 1
+      });
+      
+      updateCart();
+      showToast('Item added to cart!');
+    });
+  });
+  
+  function updateCart() {
+    if (cart.length === 0) {
+      cartItems.innerHTML = `
+        <div class="text-center py-8 text-gray-500">
+          <div class="w-16 h-16 mx-auto flex items-center justify-center bg-gray-100 rounded-full mb-4">
+            <i class="ri-shopping-cart-line ri-2x"></i>
+          </div>
+          <p>Your cart is empty</p>
+        </div>
+      `;
+      cartTotal.textContent = '₹0';
+      return;
+    }
+    
+    let total = 0;
+    let html = '';
+    
+    cart.forEach((item, index) => {
+      total += item.price * item.quantity;
+      html += `
+        <div class="flex items-center py-3 ${index < cart.length - 1 ? 'border-b' : ''}">
+          <div class="w-16 h-16 flex-shrink-0 rounded overflow-hidden">
+            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+          </div>
+          <div class="ml-4 flex-1">
+            <h4 class="font-bold text-sm">${item.name}</h4>
+            <p class="text-xs text-gray-500">${item.variant}</p>
+            <div class="flex justify-between items-center mt-2">
+              <span class="font-bold text-primary">₹${item.price.toLocaleString()}</span>
+              <div class="flex items-center">
+                <button class="w-6 h-6 flex items-center justify-center bg-gray-100 rounded-full text-gray-600 cart-decrease" data-index="${index}">-</button>
+                <span class="mx-2 text-sm">${item.quantity}</span>
+                <button class="w-6 h-6 flex items-center justify-center bg-gray-100 rounded-full text-gray-600 cart-increase" data-index="${index}">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+    
+    cartItems.innerHTML = html;
+    cartTotal.textContent = `₹${total.toLocaleString()}`;
+    
+    // Add event listeners for quantity buttons
+    document.querySelectorAll('.cart-decrease').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const index = parseInt(btn.getAttribute('data-index'));
+        if (cart[index].quantity > 1) {
+          cart[index].quantity--;
+        } else {
+          cart.splice(index, 1);
+        }
+        updateCart();
+      });
+    });
+    
+    document.querySelectorAll('.cart-increase').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const index = parseInt(btn.getAttribute('data-index'));
+        cart[index].quantity++;
+        updateCart();
+      });
+    });
+  }
+  
+  // Open cart modal
+  function openCart() {
+    cartModal.classList.remove('hidden');
+    setTimeout(() => {
+      cartContent.classList.remove('translate-y-full');
+    }, 10);
+  }
+  
+  // Close cart modal
+  function closeCart() {
+    cartContent.classList.add('translate-y-full');
+    setTimeout(() => {
+      cartModal.classList.add('hidden');
+    }, 300);
+  }
+  
+  closeCartBtn.addEventListener('click', closeCart);
+  cartBackdrop.addEventListener('click', closeCart);
+  
+  // Show toast notification
+  function showToast(message) {
+    const toast = document.getElementById('success-toast');
+    const toastMessage = document.getElementById('toast-message');
+    
+    toastMessage.textContent = message;
+    toast.style.transform = 'translateY(0)';
+    toast.style.opacity = '1';
+    
+    setTimeout(() => {
+      toast.style.transform = 'translateY(-200%)';
+      toast.style.opacity = '0';
+    }, 3000);
+  }
+  
+  // Make showToast function globally available
+  window.showToast = showToast;
+});
+</script>
+
+</body>
+</html>

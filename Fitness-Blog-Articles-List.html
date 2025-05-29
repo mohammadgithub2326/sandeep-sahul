@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitness Blog - Sandeep Sahul Fitness Factory</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#FF0000',secondary:'#333333'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Bebas Neue', sans-serif;
+}
+.category-chip::-webkit-scrollbar {
+  display: none;
+}
+.category-chip {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.article-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.article-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+.search-results {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.search-results.active {
+  max-height: 500px;
+}
+</style>
+</head>
+<body class="bg-gray-50">
+<!-- Navigation Bar -->
+<nav class="bg-black text-white fixed w-full top-0 z-50">
+  <div class="max-w-md mx-auto px-4 py-3 flex justify-between items-center">
+    <a href="https://readdy.ai/home/1c17c62c-55c5-4300-a1cb-c5eefeed5abf/738663c3-f51b-437a-be81-69e2c79f6878" data-readdy="true" class="flex items-center">
+      <div class="w-8 h-8 flex items-center justify-center mr-2">
+        <i class="ri-arrow-left-line ri-lg"></i>
+      </div>
+    </a>
+    <div class="font-['Pacifico'] text-primary text-xl">logo</div>
+    <div class="w-8 h-8 flex items-center justify-center cursor-pointer" id="search-toggle">
+      <i class="ri-search-line ri-lg"></i>
+    </div>
+  </div>
+  <div id="search-container" class="max-w-md mx-auto px-4 pb-3 hidden">
+    <div class="relative">
+      <input type="text" id="search-input" class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-black" placeholder="Search articles...">
+      <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 w-8 h-8 flex items-center justify-center">
+        <i class="ri-search-line"></i>
+      </button>
+    </div>
+    <div id="search-results" class="search-results mt-2 bg-white rounded-md shadow-md overflow-hidden">
+      <div class="p-4">
+        <p class="text-gray-500 text-sm mb-3">Search results:</p>
+        <div id="results-container">
+          <!-- Search results will be populated here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main class="pt-14 pb-16 max-w-md mx-auto">
+  <!-- Page Title -->
+  <div class="px-4 py-6">
+    <h1 class="text-4xl font-bold text-black">FITNESS BLOG</h1>
+    <p class="text-gray-600 mt-1">Explore our collection of fitness articles</p>
+  </div>
+
+  <!-- Categories -->
+  <div class="px-4 mb-6">
+    <div class="category-chip flex overflow-x-auto pb-2 -mx-1 space-x-2">
+      <button class="category-filter whitespace-nowrap px-4 py-2 bg-primary text-white rounded-full text-sm font-medium flex-shrink-0" data-category="all">
+        All <span class="ml-1 bg-white bg-opacity-20 px-1.5 rounded-full text-xs">12</span>
+      </button>
+      <button class="category-filter whitespace-nowrap px-4 py-2 bg-white text-gray-700 rounded-full text-sm font-medium flex-shrink-0" data-category="technique">
+        Technique <span class="ml-1 bg-gray-200 px-1.5 rounded-full text-xs">4</span>
+      </button>
+      <button class="category-filter whitespace-nowrap px-4 py-2 bg-white text-gray-700 rounded-full text-sm font-medium flex-shrink-0" data-category="nutrition">
+        Nutrition <span class="ml-1 bg-gray-200 px-1.5 rounded-full text-xs">3</span>
+      </button>
+      <button class="category-filter whitespace-nowrap px-4 py-2 bg-white text-gray-700 rounded-full text-sm font-medium flex-shrink-0" data-category="motivation">
+        Motivation <span class="ml-1 bg-gray-200 px-1.5 rounded-full text-xs">2</span>
+      </button>
+      <button class="category-filter whitespace-nowrap px-4 py-2 bg-white text-gray-700 rounded-full text-sm font-medium flex-shrink-0" data-category="equipment">
+        Equipment <span class="ml-1 bg-gray-200 px-1.5 rounded-full text-xs">2</span>
+      </button>
+      <button class="category-filter whitespace-nowrap px-4 py-2 bg-white text-gray-700 rounded-full text-sm font-medium flex-shrink-0" data-category="recovery">
+        Recovery <span class="ml-1 bg-gray-200 px-1.5 rounded-full text-xs">1</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Articles Grid -->
+  <div class="px-4">
+    <div id="articles-container" class="grid grid-cols-2 gap-4">
+      <!-- Article 1 -->
+      <article class="article-card bg-white rounded-lg shadow-md overflow-hidden" data-category="technique">
+        <a href="#" class="block">
+          <div class="h-32 overflow-hidden">
+            <img src="https://readdy.ai/api/search-image?query=person%2520doing%2520deadlift%2520in%2520gym%252C%2520proper%2520form%2520demonstration%252C%2520weight%2520training%2520technique%252C%2520professional%2520fitness%2520photography%252C%2520red%2520and%2520black%2520gym%2520environment&width=180&height=128&seq=101&orientation=landscape" alt="Deadlift Article" class="w-full h-full object-cover object-top">
+          </div>
+          <div class="p-3">
+            <div class="flex items-center mb-2">
+              <span class="text-xs font-medium bg-red-100 text-primary px-2 py-0.5 rounded">Technique</span>
+              <span class="text-xs text-gray-500 ml-2">May 25, 2025</span>
+            </div>
+            <h3 class="text-sm font-bold mb-1 line-clamp-2">Master the Perfect Deadlift: Form Guide</h3>
+            <p class="text-xs text-gray-600 line-clamp-3">Learn the proper technique for deadlifts to maximize gains while preventing injuries. Our step-by-step guide covers everything from setup to execution.</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- Article 2 -->
+      <article class="article-card bg-white rounded-lg shadow-md overflow-hidden" data-category="nutrition">
+        <a href="#" class="block">
+          <div class="h-32 overflow-hidden">
+            <img src="https://readdy.ai/api/search-image?query=healthy%2520meal%2520prep%2520containers%2520with%2520protein%252C%2520vegetables%2520and%2520carbs%252C%2520nutrition%2520planning%252C%2520balanced%2520diet%2520for%2520fitness%252C%2520professional%2520food%2520photography&width=180&height=128&seq=102&orientation=landscape" alt="Nutrition Article" class="w-full h-full object-cover object-top">
+          </div>
+          <div class="p-3">
+            <div class="flex items-center mb-2">
+              <span class="text-xs font-medium bg-red-100 text-primary px-2 py-0.5 rounded">Nutrition</span>
+              <span class="text-xs text-gray-500 ml-2">May 20, 2025</span>
+            </div>
+            <h3 class="text-sm font-bold mb-1 line-clamp-2">5 Meal Prep Strategies for Busy Professionals</h3>
+            <p class="text-xs text-gray-600 line-clamp-3">Discover time-saving meal preparation techniques that will help you stay on track with your nutrition goals even with a hectic schedule.</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- Article 3 -->
+      <article class="article-card bg-white rounded-lg shadow-md overflow-hidden" data-category="motivation">
+        <a href="#" class="block">
+          <div class="h-32 overflow-hidden">
+            <img src="https://readdy.ai/api/search-image?query=fitness%2520motivation%252C%2520person%2520celebrating%2520achievement%2520in%2520gym%252C%2520arms%2520raised%2520in%2520victory%252C%2520sweaty%2520but%2520triumphant%252C%2520dramatic%2520lighting%252C%2520red%2520and%2520black%2520color%2520scheme&width=180&height=128&seq=103&orientation=landscape" alt="Motivation Article" class="w-full h-full object-cover object-top">
+          </div>
+          <div class="p-3">
+            <div class="flex items-center mb-2">
+              <span class="text-xs font-medium bg-red-100 text-primary px-2 py-0.5 rounded">Motivation</span>
+              <span class="text-xs text-gray-500 ml-2">May 18, 2025</span>
+            </div>
+            <h3 class="text-sm font-bold mb-1 line-clamp-2">Finding Your 'Why': The Key to Fitness Consistency</h3>
+            <p class="text-xs text-gray-600 line-clamp-3">Discover how identifying your deeper motivation can help you stay committed to your fitness journey even when motivation wanes.</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- Article 4 -->
+      <article class="article-card bg-white rounded-lg shadow-md overflow-hidden" data-category="technique">
+        <a href="#" class="block">
+          <div class="h-32 overflow-hidden">
+            <img src="https://readdy.ai/api/search-image?query=person%2520performing%2520perfect%2520squat%2520form%2520in%2520gym%252C%2520side%2520view%252C%2520proper%2520technique%2520demonstration%252C%2520professional%2520fitness%2520photography%252C%2520red%2520and%2520black%2520gym%2520environment&width=180&height=128&seq=104&orientation=landscape" alt="Squat Article" class="w-full h-full object-cover object-top">
+          </div>
+          <div class="p-3">
+            <div class="flex items-center mb-2">
+              <span class="text-xs font-medium bg-red-100 text-primary px-2 py-0.5 rounded">Technique</span>
+              <span class="text-xs text-gray-500 ml-2">May 15, 2025</span>
+            </div>
+            <h3 class="text-sm font-bold mb-1 line-clamp-2">Squat Like a Pro: Common Mistakes and How to Fix Them</h3>
+            <p class="text-xs text-gray-600 line-clamp-3">Improve your squat form with our comprehensive guide to identifying and correcting the most common technique errors.</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- Article 5 -->
+      <article class="article-card bg-white rounded-lg shadow-md overflow-hidden" data-category="equipment">
+        <a href="#" class="block">
+          <div class="h-32 overflow-hidden">
+            <img src="https://readdy.ai/api/search-image?query=home%2520gym%2520equipment%2520setup%252C%2520essential%2520fitness%2520gear%2520for%2520small%2520spaces%252C%2520dumbbells%2520resistance%2520bands%2520and%2520bench%252C%2520clean%2520organized%2520home%2520workout%2520space&width=180&height=128&seq=105&orientation=landscape" alt="Home Gym Article" class="w-full h-full object-cover object-top">
+          </div>
+          <div class="p-3">
+            <div class="flex items-center mb-2">
+              <span class="text-xs font-medium bg-red-100 text-primary px-2 py-0.5 rounded">Equipment</span>
+              <span class="text-xs text-gray-500 ml-2">May 12, 2025</span>
+            </div>
+            <h3 class="text-sm font-bold mb-1 line-clamp-2">Building the Perfect Home Gym on Any Budget</h3>
+            <p class="text-xs text-gray-600 line-clamp-3">From minimal investments to premium setups, learn how to create an effective workout space in your home regardless of your budget.</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- Article 6 -->
+      <article class="article-card bg-white rounded-lg shadow-md overflow-hidden" data-category="nutrition">
+        <a href="#" class="block">
+          <div class="h-32 overflow-hidden">
+            <img src="https://readdy.ai/api/search-image?query=protein%2520rich%2520foods%2520beautifully%2520arranged%252C%2520chicken%2520eggs%2520beans%2520nuts%2520and%2520dairy%252C%2520nutrition%2520for%2520muscle%2520building%252C%2520professional%2520food%2520photography%252C%2520bright%2520clean%2520background&width=180&height=128&seq=106&orientation=landscape" alt="Protein Article" class="w-full h-full object-cover object-top">
+          </div>
+          <div class="p-3">
+            <div class="flex items-center mb-2">
+              <span class="text-xs font-medium bg-red-100 text-primary px-2 py-0.5 rounded">Nutrition</span>
+              <span class="text-xs text-gray-500 ml-2">May 10, 2025</span>
+            </div>
+            <h3 class="text-sm font-bold mb-1 line-clamp-2">Protein Myths Debunked: How Much Do You Really Need?</h3>
+            <p class="text-xs text-gray-600 line-clamp-3">Separating fact from fiction about protein requirements for different fitness goals, with evidence-based recommendations.</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- Article 7 -->
+      <article class="article-card bg-white rounded-lg shadow-md overflow-hidden" data-category="technique">
+        <a href="#" class="block">
+          <div class="h-32 overflow-hidden">
+            <img src="https://readdy.ai/api/search-image?query=person%2520performing%2520perfect%2520bench%2520press%2520in%2520gym%252C%2520proper%2520form%2520demonstration%252C%2520weight%2520training%2520technique%252C%2520professional%2520fitness%2520photography%252C%2520red%2520and%2520black%2520gym%2520environment&width=180&height=128&seq=107&orientation=landscape" alt="Bench Press Article" class="w-full h-full object-cover object-top">
+          </div>
+          <div class="p-3">
+            <div class="flex items-center mb-2">
+              <span class="text-xs font-medium bg-red-100 text-primary px-2 py-0.5 rounded">Technique</span>
+              <span class="text-xs text-gray-500 ml-2">May 8, 2025</span>
+            </div>
+            <h3 class="text-sm font-bold mb-1 line-clamp-2">Bench Press Mastery: Techniques for a Stronger Chest</h3>
+            <p class="text-xs text-gray-600 line-clamp-3">Learn the secrets to proper bench press form and programming to build impressive chest strength and size safely.</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- Article 8 -->
+      <article class="article-card bg-white rounded-lg shadow-md overflow-hidden" data-category="recovery">
+        <a href="#" class="block">
+          <div class="h-32 overflow-hidden">
+            <img src="https://readdy.ai/api/search-image?query=person%2520using%2520foam%2520roller%2520for%2520muscle%2520recovery%252C%2520post-workout%2520stretching%252C%2520recovery%2520techniques%252C%2520professional%2520fitness%2520photography%252C%2520bright%2520gym%2520environment&width=180&height=128&seq=108&orientation=landscape" alt="Recovery Article" class="w-full h-full object-cover object-top">
+          </div>
+          <div class="p-3">
+            <div class="flex items-center mb-2">
+              <span class="text-xs font-medium bg-red-100 text-primary px-2 py-0.5 rounded">Recovery</span>
+              <span class="text-xs text-gray-500 ml-2">May 5, 2025</span>
+            </div>
+            <h3 class="text-sm font-bold mb-1 line-clamp-2">Recovery Strategies That Actually Work: Science-Backed Approaches</h3>
+            <p class="text-xs text-gray-600 line-clamp-3">Explore evidence-based recovery methods that help reduce soreness and improve performance between workouts.</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- Article 9 -->
+      <article class="article-card bg-white rounded-lg shadow-md overflow-hidden" data-category="motivation">
+        <a href="#" class="block">
+          <div class="h-32 overflow-hidden">
+            <img src="https://readdy.ai/api/search-image?query=person%2520tracking%2520fitness%2520progress%2520in%2520journal%252C%2520writing%2520workout%2520goals%252C%2520planning%2520fitness%2520journey%252C%2520professional%2520photography%252C%2520motivational%2520setting&width=180&height=128&seq=109&orientation=landscape" alt="Goal Setting Article" class="w-full h-full object-cover object-top">
+          </div>
+          <div class="p-3">
+            <div class="flex items-center mb-2">
+              <span class="text-xs font-medium bg-red-100 text-primary px-2 py-0.5 rounded">Motivation</span>
+              <span class="text-xs text-gray-500 ml-2">May 2, 2025</span>
+            </div>
+            <h3 class="text-sm font-bold mb-1 line-clamp-2">SMART Goal Setting for Fitness Success</h3>
+            <p class="text-xs text-gray-600 line-clamp-3">Learn how to set Specific, Measurable, Achievable, Relevant, and Time-bound fitness goals that keep you motivated and on track.</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- Article 10 -->
+      <article class="article-card bg-white rounded-lg shadow-md overflow-hidden" data-category="equipment">
+        <a href="#" class="block">
+          <div class="h-32 overflow-hidden">
+            <img src="https://readdy.ai/api/search-image?query=fitness%2520wearable%2520technology%252C%2520smartwatch%2520tracking%2520workout%2520metrics%252C%2520heart%2520rate%2520monitoring%252C%2520professional%2520product%2520photography%252C%2520clean%2520background&width=180&height=128&seq=110&orientation=landscape" alt="Fitness Tech Article" class="w-full h-full object-cover object-top">
+          </div>
+          <div class="p-3">
+            <div class="flex items-center mb-2">
+              <span class="text-xs font-medium bg-red-100 text-primary px-2 py-0.5 rounded">Equipment</span>
+              <span class="text-xs text-gray-500 ml-2">Apr 28, 2025</span>
+            </div>
+            <h3 class="text-sm font-bold mb-1 line-clamp-2">Fitness Tech Worth Investing In: 2025 Edition</h3>
+            <p class="text-xs text-gray-600 line-clamp-3">Our review of the latest fitness trackers, smart equipment, and apps that can genuinely improve your training results.</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- Article 11 -->
+      <article class="article-card bg-white rounded-lg shadow-md overflow-hidden" data-category="nutrition">
+        <a href="#" class="block">
+          <div class="h-32 overflow-hidden">
+            <img src="https://readdy.ai/api/search-image?query=pre%2520and%2520post%2520workout%2520nutrition%252C%2520healthy%2520meals%2520and%2520supplements%2520for%2520optimal%2520performance%252C%2520professional%2520food%2520photography%252C%2520bright%2520clean%2520background&width=180&height=128&seq=111&orientation=landscape" alt="Workout Nutrition Article" class="w-full h-full object-cover object-top">
+          </div>
+          <div class="p-3">
+            <div class="flex items-center mb-2">
+              <span class="text-xs font-medium bg-red-100 text-primary px-2 py-0.5 rounded">Nutrition</span>
+              <span class="text-xs text-gray-500 ml-2">Apr 25, 2025</span>
+            </div>
+            <h3 class="text-sm font-bold mb-1 line-clamp-2">Pre and Post-Workout Nutrition: Timing Is Everything</h3>
+            <p class="text-xs text-gray-600 line-clamp-3">Optimize your workout results with the right nutrients at the right time, based on the latest nutritional science.</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- Article 12 -->
+      <article class="article-card bg-white rounded-lg shadow-md overflow-hidden" data-category="technique">
+        <a href="#" class="block">
+          <div class="h-32 overflow-hidden">
+            <img src="https://readdy.ai/api/search-image?query=person%2520performing%2520perfect%2520pull-up%2520form%2520in%2520gym%252C%2520proper%2520technique%2520demonstration%252C%2520upper%2520body%2520strength%2520training%252C%2520professional%2520fitness%2520photography%252C%2520red%2520and%2520black%2520gym%2520environment&width=180&height=128&seq=112&orientation=landscape" alt="Pull-up Article" class="w-full h-full object-cover object-top">
+          </div>
+          <div class="p-3">
+            <div class="flex items-center mb-2">
+              <span class="text-xs font-medium bg-red-100 text-primary px-2 py-0.5 rounded">Technique</span>
+              <span class="text-xs text-gray-500 ml-2">Apr 22, 2025</span>
+            </div>
+            <h3 class="text-sm font-bold mb-1 line-clamp-2">From Zero to Pull-up Hero: A Progressive Guide</h3>
+            <p class="text-xs text-gray-600 line-clamp-3">Follow this step-by-step progression to achieve your first pull-up or increase your current numbers, regardless of your starting point.</p>
+          </div>
+        </a>
+      </article>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex justify-center items-center mt-8 mb-4">
+      <nav class="inline-flex rounded-md shadow">
+        <a href="#" class="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 cursor-pointer">
+          <i class="ri-arrow-left-s-line"></i>
+        </a>
+        <a href="#" class="px-3 py-2 border-t border-b border-gray-300 bg-primary text-sm font-medium text-white cursor-pointer">
+          1
+        </a>
+        <a href="#" class="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer">
+          2
+        </a>
+        <a href="#" class="px-3 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer">
+          3
+        </a>
+        <a href="#" class="px-3 py-2 border-t border-b border-l border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer">
+          ...
+        </a>
+        <a href="#" class="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 cursor-pointer">
+          <i class="ri-arrow-right-s-line"></i>
+        </a>
+      </nav>
+    </div>
+  </div>
+</main>
+
+<!-- Tab Bar -->
+<nav class="bg-black text-white fixed w-full bottom-0 z-50">
+  <div class="grid grid-cols-5 max-w-md mx-auto">
+    <a href="https://readdy.ai/home/1c17c62c-55c5-4300-a1cb-c5eefeed5abf/738663c3-f51b-437a-be81-69e2c79f6878" data-readdy="true" class="flex flex-col items-center justify-center py-2 text-gray-400">
+      <div class="w-6 h-6 flex items-center justify-center">
+        <i class="ri-home-5-line ri-lg"></i>
+      </div>
+      <span class="text-xs mt-1">Home</span>
+    </a>
+    <a href="#" class="flex flex-col items-center justify-center py-2 text-gray-400">
+      <div class="w-6 h-6 flex items-center justify-center">
+        <i class="ri-service-line ri-lg"></i>
+      </div>
+      <span class="text-xs mt-1">Services</span>
+    </a>
+    <a href="#" class="flex flex-col items-center justify-center py-2 text-gray-400">
+      <div class="w-6 h-6 flex items-center justify-center">
+        <i class="ri-calculator-line ri-lg"></i>
+      </div>
+      <span class="text-xs mt-1">Tools</span>
+    </a>
+    <a href="#" class="flex flex-col items-center justify-center py-2 text-gray-400">
+      <div class="w-6 h-6 flex items-center justify-center">
+        <i class="ri-shopping-bag-line ri-lg"></i>
+      </div>
+      <span class="text-xs mt-1">Shop</span>
+    </a>
+    <a href="#" class="flex flex-col items-center justify-center py-2 text-primary">
+      <div class="w-6 h-6 flex items-center justify-center">
+        <i class="ri-article-fill ri-lg"></i>
+      </div>
+      <span class="text-xs mt-1">Blog</span>
+    </a>
+  </div>
+</nav>
+
+<!-- Filter Script -->
+<script id="filter-script">
+document.addEventListener('DOMContentLoaded', function() {
+  const categoryFilters = document.querySelectorAll('.category-filter');
+  const articles = document.querySelectorAll('.article-card');
+  
+  categoryFilters.forEach(filter => {
+    filter.addEventListener('click', () => {
+      const category = filter.getAttribute('data-category');
+      
+      // Update active filter styling
+      categoryFilters.forEach(btn => {
+        btn.classList.remove('bg-primary', 'text-white');
+        btn.classList.add('bg-white', 'text-gray-700');
+        
+        const countSpan = btn.querySelector('span');
+        if (countSpan) {
+          countSpan.classList.remove('bg-white', 'bg-opacity-20');
+          countSpan.classList.add('bg-gray-200');
+        }
+      });
+      
+      filter.classList.add('bg-primary', 'text-white');
+      filter.classList.remove('bg-white', 'text-gray-700');
+      
+      const activeCountSpan = filter.querySelector('span');
+      if (activeCountSpan) {
+        activeCountSpan.classList.remove('bg-gray-200');
+        activeCountSpan.classList.add('bg-white', 'bg-opacity-20');
+      }
+      
+      // Filter articles
+      articles.forEach(article => {
+        if (category === 'all' || article.getAttribute('data-category') === category) {
+          article.classList.remove('hidden');
+        } else {
+          article.classList.add('hidden');
+        }
+      });
+    });
+  });
+});
+</script>
+
+<!-- Search Script -->
+<script id="search-script">
+document.addEventListener('DOMContentLoaded', function() {
+  const searchToggle = document.getElementById('search-toggle');
+  const searchContainer = document.getElementById('search-container');
+  const searchInput = document.getElementById('search-input');
+  const searchResults = document.getElementById('search-results');
+  const resultsContainer = document.getElementById('results-container');
+  const articles = document.querySelectorAll('.article-card');
+  
+  searchToggle.addEventListener('click', () => {
+    searchContainer.classList.toggle('hidden');
+    if (!searchContainer.classList.contains('hidden')) {
+      searchInput.focus();
+    }
+  });
+  
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.toLowerCase().trim();
+    
+    if (query.length < 2) {
+      searchResults.classList.remove('active');
+      return;
+    }
+    
+    const filteredArticles = Array.from(articles).filter(article => {
+      const title = article.querySelector('h3').textContent.toLowerCase();
+      const description = article.querySelector('p').textContent.toLowerCase();
+      const category = article.getAttribute('data-category').toLowerCase();
+      
+      return title.includes(query) || description.includes(query) || category.includes(query);
+    });
+    
+    if (filteredArticles.length > 0) {
+      let resultsHTML = '';
+      filteredArticles.slice(0, 5).forEach(article => {
+        const title = article.querySelector('h3').textContent;
+        const category = article.querySelector('.text-xs.font-medium').textContent;
+        const imgSrc = article.querySelector('img').src;
+        
+        resultsHTML += `
+          <a href="#" class="flex items-center p-2 hover:bg-gray-50 rounded">
+            <div class="w-12 h-12 flex-shrink-0 rounded overflow-hidden">
+              <img src="${imgSrc}" alt="${title}" class="w-full h-full object-cover">
+            </div>
+            <div class="ml-3 flex-1">
+              <h4 class="text-sm font-medium line-clamp-1">${title}</h4>
+              <span class="text-xs text-primary">${category}</span>
+            </div>
+          </a>
+        `;
+      });
+      
+      resultsContainer.innerHTML = resultsHTML;
+      searchResults.classList.add('active');
+    } else {
+      resultsContainer.innerHTML = '<p class="text-gray-500 text-sm">No results found</p>';
+      searchResults.classList.add('active');
+    }
+  });
+  
+  // Close search results when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!searchContainer.contains(e.target) && !searchToggle.contains(e.target)) {
+      searchContainer.classList.add('hidden');
+      searchResults.classList.remove('active');
+    }
+  });
+});
+</script>
+
+<!-- Pagination Script -->
+<script id="pagination-script">
+document.addEventListener('DOMContentLoaded', function() {
+  const paginationLinks = document.querySelectorAll('nav a');
+  
+  paginationLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // Only process numbered links
+      if (link.textContent.trim() && !isNaN(link.textContent.trim())) {
+        // Update active page
+        paginationLinks.forEach(l => {
+          l.classList.remove('bg-primary', 'text-white');
+          if (l.textContent.trim() && !isNaN(l.textContent.trim())) {
+            l.classList.add('bg-white', 'text-gray-700');
+          }
+        });
+        
+        link.classList.remove('bg-white', 'text-gray-700');
+        link.classList.add('bg-primary', 'text-white');
+        
+        // Scroll to top of articles
+        document.getElementById('articles-container').scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>

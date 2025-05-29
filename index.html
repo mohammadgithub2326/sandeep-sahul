@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sandeep Sahul Fitness Factory</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#FF0000',secondary:'#333333'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Montserrat', sans-serif;
+overflow-x: hidden;
+}
+.muscle-hotspot:hover > div:last-child {
+opacity: 1;
+transform: translateX(0);
+}
+#muscle-info.active {
+opacity: 1;
+transform: scale(1);
+}
+h1, h2, h3, h4, h5, h6 {
+font-family: 'Bebas Neue', sans-serif;
+}
+.splash-screen {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: 9999;
+background: linear-gradient(135deg, #000000, #FF0000);
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+transition: opacity 0.5s ease-out;
+}
+.muscle-animation {
+width: 150px;
+height: 150px;
+position: relative;
+animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+0% { transform: scale(1); }
+50% { transform: scale(1.1); }
+100% { transform: scale(1); }
+}
+.progress-bar {
+width: 200px;
+height: 4px;
+background-color: rgba(255, 255, 255, 0.2);
+margin-top: 30px;
+border-radius: 2px;
+overflow: hidden;
+}
+.progress {
+height: 100%;
+background-color: white;
+width: 0%;
+transition: width 0.5s;
+}
+.calculator-card {
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.calculator-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+.product-card {
+transition: transform 0.3s ease;
+}
+.product-card:hover {
+transform: translateY(-5px);
+}
+.product-card:hover .add-to-cart {
+opacity: 1;
+}
+.add-to-cart {
+opacity: 0;
+transition: opacity 0.3s ease;
+}
+.tab-content {
+display: none;
+}
+.tab-content.active {
+display: block;
+}
+</style>
+</head>
+<body class="bg-gray-50">
+<!-- Splash Screen -->
+<div id="splash-screen" class="splash-screen">
+<div class="muscle-animation">
+<img src="https://readdy.ai/api/search-image?query=bicep%20muscle%20flexing%20animation%2C%20red%20and%20black%20color%20scheme%2C%20fitness%20icon%2C%20minimal%20design%2C%20high%20contrast%2C%20professional%20gym%20logo%2C%20centered%20composition%2C%20isolated%20on%20transparent%20background&width=150&height=150&seq=1&orientation=squarish" alt="Muscle Animation" class="w-full h-full">
+</div>
+<h1 class="text-white text-3xl font-bold mt-6 text-center px-6">Sandeep Sahul Fitness Factory</h1>
+<p class="text-white text-lg mt-2 text-center">Build Your Legacy</p>
+<div class="progress-bar">
+<div id="progress" class="progress"></div>
+</div>
+<p id="progress-text" class="text-white text-sm mt-2">Loading... 0%</p>
+<button id="enter-btn" class="hidden mt-8 bg-white text-primary px-8 py-3 rounded-button font-bold hover:bg-gray-100 transition-colors">ENTER GYM</button>
+</div>
+<!-- Navigation Bar -->
+<nav class="bg-black text-white fixed w-full top-0 z-50">
+<div class="max-w-md mx-auto px-4 py-3 flex justify-between items-center">
+<div class="font-['Pacifico'] text-primary text-xl">logo</div>
+<button id="menu-toggle" class="w-8 h-8 flex items-center justify-center">
+<i class="ri-menu-line ri-lg"></i>
+</button>
+</div>
+<div id="mobile-menu" class="hidden max-w-md mx-auto px-4 pb-3">
+<ul class="space-y-3">
+<li><a href="#home" class="block py-2 hover:text-primary transition-colors">Home</a></li>
+<li><a href="#about" class="block py-2 hover:text-primary transition-colors">About</a></li>
+<li><a href="#services" class="block py-2 hover:text-primary transition-colors">Services</a></li>
+<li><a href="#tools" class="block py-2 hover:text-primary transition-colors">Fitness Tools</a></li>
+<li><a href="#store" class="block py-2 hover:text-primary transition-colors">Store</a></li>
+<li><a href="#blog" class="block py-2 hover:text-primary transition-colors">Blog</a></li>
+<li><a href="#contact" class="block py-2 hover:text-primary transition-colors">Contact</a></li>
+</ul>
+<button class="mt-4 w-full bg-primary text-white py-2 px-4 rounded-button font-semibold hover:bg-red-700 transition-colors">Book a Free Trial</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="pt-14 pb-16">
+<!-- Hero Section -->
+<section id="home" class="relative h-[400px] overflow-hidden">
+<div class="absolute inset-0 bg-black">
+<img src="https://readdy.ai/api/search-image?query=professional%20male%20fitness%20trainer%20in%20a%20modern%20gym%2C%20muscular%20physique%2C%20confident%20pose%2C%20gym%20equipment%20in%20background%2C%20dramatic%20lighting%2C%20red%20and%20black%20color%20scheme%2C%20high%20quality%20professional%20photography&width=375&height=400&seq=2&orientation=portrait" alt="Fitness Hero" class="w-full h-full object-cover object-top opacity-80">
+</div>
+<div class="relative h-full flex flex-col justify-end p-6 text-white">
+<h1 class="text-5xl font-bold mb-2">TRAIN LIKE A CHAMPION</h1>
+<p class="text-lg mb-6">Transform your body, transform your life</p>
+<button class="bg-primary text-white py-3 px-6 rounded-button font-semibold hover:bg-red-700 transition-colors w-full md:w-auto cursor-pointer">BOOK A FREE TRIAL SESSION</button>
+</div>
+</section>
+<!-- About Section -->
+<section id="about" class="px-4 py-10 max-w-md mx-auto">
+<h2 class="text-4xl font-bold mb-6 text-black">ABOUT US</h2>
+<div class="flex flex-col space-y-6">
+<div class="bg-white rounded-lg shadow-md p-5">
+<h3 class="text-2xl font-bold mb-3 text-primary">Meet Sandeep Sahul</h3>
+<p class="text-gray-700 mb-4">With over 15 years of experience in professional fitness training, Sandeep has transformed thousands of lives through his unique approach to fitness and nutrition.</p>
+<div class="flex items-center space-x-4 mt-4">
+<div class="w-12 h-12 flex items-center justify-center bg-primary rounded-full text-white">
+<i class="ri-medal-line ri-lg"></i>
+</div>
+<div>
+<h4 class="font-bold">Certified Trainer</h4>
+<p class="text-sm text-gray-600">NASM, ACE, ISSA Certified</p>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-md p-5">
+<h3 class="text-2xl font-bold mb-3">Our Philosophy</h3>
+<p class="text-gray-700 mb-4">We believe fitness is not just about looking good, but feeling good. Our holistic approach combines strength training, nutrition, and mental wellness to create sustainable results.</p>
+<div class="grid grid-cols-3 gap-4 mt-4">
+<div class="text-center">
+<div class="w-12 h-12 mx-auto flex items-center justify-center bg-gray-100 rounded-full">
+<i class="ri-heart-pulse-line ri-lg text-primary"></i>
+</div>
+<p class="text-sm mt-2">Health First</p>
+</div>
+<div class="text-center">
+<div class="w-12 h-12 mx-auto flex items-center justify-center bg-gray-100 rounded-full">
+<i class="ri-mental-health-line ri-lg text-primary"></i>
+</div>
+<p class="text-sm mt-2">Mind & Body</p>
+</div>
+<div class="text-center">
+<div class="w-12 h-12 mx-auto flex items-center justify-center bg-gray-100 rounded-full">
+<i class="ri-group-line ri-lg text-primary"></i>
+</div>
+<p class="text-sm mt-2">Community</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Services Section -->
+<section id="services" class="px-4 py-10 bg-gray-100 max-w-md mx-auto">
+<h2 class="text-4xl font-bold mb-6 text-black">OUR SERVICES</h2>
+<div class="grid grid-cols-1 gap-5">
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="h-48 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=personal%20training%20session%20in%20a%20modern%20gym%2C%20trainer%20helping%20client%20with%20weight%20lifting%2C%20professional%20gym%20equipment%2C%20red%20and%20black%20color%20scheme%2C%20high%20quality%20professional%20photography&width=375&height=200&seq=3&orientation=landscape" alt="Personal Training" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-5">
+<h3 class="text-2xl font-bold mb-2">Personal Training</h3>
+<p class="text-gray-700 mb-4">One-on-one sessions tailored to your specific goals, whether it's weight loss, muscle gain, or athletic performance.</p>
+<div class="flex justify-between items-center">
+<span class="text-primary font-bold">₹2,500 / session</span>
+<button class="bg-primary text-white py-2 px-4 rounded-button text-sm font-semibold hover:bg-red-700 transition-colors cursor-pointer">BOOK NOW</button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="h-48 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=group%20fitness%20class%20in%20a%20modern%20gym%2C%20multiple%20people%20exercising%20together%2C%20energetic%20atmosphere%2C%20trainer%20leading%20the%20class%2C%20red%20and%20black%20color%20scheme%2C%20high%20quality%20professional%20photography&width=375&height=200&seq=4&orientation=landscape" alt="Group Classes" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-5">
+<h3 class="text-2xl font-bold mb-2">Group Classes</h3>
+<p class="text-gray-700 mb-4">High-energy group sessions including HIIT, strength training, yoga, and specialized fitness programs.</p>
+<div class="flex justify-between items-center">
+<span class="text-primary font-bold">₹1,200 / class</span>
+<button class="bg-primary text-white py-2 px-4 rounded-button text-sm font-semibold hover:bg-red-700 transition-colors cursor-pointer">VIEW SCHEDULE</button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="h-48 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=nutrition%20consultation%20with%20fitness%20trainer%2C%20healthy%20meal%20preparation%2C%20protein-rich%20foods%2C%20fruits%20and%20vegetables%2C%20nutrition%20planning%2C%20red%20and%20black%20color%20scheme%2C%20high%20quality%20professional%20photography&width=375&height=200&seq=5&orientation=landscape" alt="Nutrition Plans" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-5">
+<h3 class="text-2xl font-bold mb-2">Nutrition Plans</h3>
+<p class="text-gray-700 mb-4">Customized nutrition guidance to complement your fitness routine and maximize your results.</p>
+<div class="flex justify-between items-center">
+<span class="text-primary font-bold">₹5,000 / month</span>
+<button class="bg-primary text-white py-2 px-4 rounded-button text-sm font-semibold hover:bg-red-700 transition-colors cursor-pointer">GET STARTED</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Fitness Tools Section -->
+<section id="tools" class="px-4 py-10 max-w-md mx-auto">
+<h2 class="text-4xl font-bold mb-6 text-black">FITNESS TOOLS</h2>
+<!-- Calculators Tabs -->
+<div class="mb-6">
+<div class="flex bg-gray-100 rounded-full p-1 mb-6">
+<button class="tab-btn flex-1 py-2 text-center rounded-full bg-primary text-white text-sm font-medium" data-tab="bmi">BMI</button>
+<button class="tab-btn flex-1 py-2 text-center rounded-full text-gray-700 text-sm font-medium" data-tab="oneRM">1RM</button>
+<button class="tab-btn flex-1 py-2 text-center rounded-full text-gray-700 text-sm font-medium" data-tab="macro">MACRO</button>
+</div>
+<!-- BMI Calculator Tab -->
+<div id="bmi-tab" class="tab-content active bg-white rounded-lg shadow-md p-5">
+<h3 class="text-xl font-bold mb-4">BMI Calculator</h3>
+<form id="bmi-form" class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Height (cm)</label>
+<input type="number" id="bmi-height" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Enter height in cm" min="100" max="250" required>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Weight (kg)</label>
+<input type="number" id="bmi-weight" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Enter weight in kg" min="30" max="300" required>
+</div>
+<button type="submit" class="w-full bg-primary text-white py-3 rounded-button font-semibold hover:bg-red-700 transition-colors cursor-pointer">CALCULATE</button>
+</form>
+<div id="bmi-result" class="mt-4 hidden">
+<div class="p-4 bg-gray-100 rounded-lg">
+<h4 class="font-bold text-lg mb-2">Your BMI: <span id="bmi-value">0</span></h4>
+<p class="text-sm text-gray-700">Category: <span id="bmi-category">-</span></p>
+<p id="bmi-advice" class="text-sm text-gray-700 mt-2"></p>
+</div>
+</div>
+</div>
+<!-- 1RM Calculator Tab -->
+<div id="oneRM-tab" class="tab-content bg-white rounded-lg shadow-md p-5">
+<h3 class="text-xl font-bold mb-4">One-Rep Max Calculator</h3>
+<form id="oneRM-form" class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Weight Lifted (kg)</label>
+<input type="number" id="weight-lifted" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Enter weight in kg" min="1" required>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Reps Performed</label>
+<input type="number" id="reps-performed" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Enter number of reps" min="1" max="15" required>
+</div>
+<button type="submit" class="w-full bg-primary text-white py-3 rounded-button font-semibold hover:bg-red-700 transition-colors cursor-pointer">CALCULATE</button>
+</form>
+<div id="oneRM-result" class="mt-4 hidden">
+<div class="p-4 bg-gray-100 rounded-lg">
+<h4 class="font-bold text-lg mb-2">Your 1RM: <span id="oneRM-value">0</span> kg</h4>
+<div class="mt-3">
+<p class="text-sm font-medium mb-1">Training Percentages:</p>
+<div class="grid grid-cols-3 gap-2 text-sm">
+<div class="bg-white p-2 rounded">
+<p class="font-bold">65%</p>
+<p id="percent-65">0 kg</p>
+</div>
+<div class="bg-white p-2 rounded">
+<p class="font-bold">75%</p>
+<p id="percent-75">0 kg</p>
+</div>
+<div class="bg-white p-2 rounded">
+<p class="font-bold">85%</p>
+<p id="percent-85">0 kg</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Macro Calculator Tab -->
+<div id="macro-tab" class="tab-content bg-white rounded-lg shadow-md p-5">
+<h3 class="text-xl font-bold mb-4">Macro Calculator</h3>
+<form id="macro-form" class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Weight (kg)</label>
+<input type="number" id="macro-weight" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Enter weight in kg" min="30" max="300" required>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Goal</label>
+<select id="macro-goal" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+<option value="lose">Weight Loss</option>
+<option value="maintain">Maintenance</option>
+<option value="gain">Muscle Gain</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Activity Level</label>
+<select id="activity-level" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+<option value="1.2">Sedentary (Office Job)</option>
+<option value="1.375">Light Activity (1-2 days/week)</option>
+<option value="1.55">Moderate Activity (3-5 days/week)</option>
+<option value="1.725">Very Active (6-7 days/week)</option>
+<option value="1.9">Athlete (2x per day)</option>
+</select>
+</div>
+<button type="submit" class="w-full bg-primary text-white py-3 rounded-button font-semibold hover:bg-red-700 transition-colors cursor-pointer">CALCULATE</button>
+</form>
+<div id="macro-result" class="mt-4 hidden">
+<div class="p-4 bg-gray-100 rounded-lg">
+<h4 class="font-bold text-lg mb-3">Your Daily Macros</h4>
+<div class="flex items-center mb-2">
+<div class="w-3 h-3 bg-primary rounded-full mr-2"></div>
+<p>Calories: <span id="calories-value" class="font-medium">0</span> kcal</p>
+</div>
+<div class="flex items-center mb-2">
+<div class="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
+<p>Protein: <span id="protein-value" class="font-medium">0</span> g</p>
+</div>
+<div class="flex items-center mb-2">
+<div class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
+<p>Carbs: <span id="carbs-value" class="font-medium">0</span> g</p>
+</div>
+<div class="flex items-center">
+<div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+<p>Fat: <span id="fat-value" class="font-medium">0</span> g</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- AR Muscle Viewer -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="h-48 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=3D%20human%20body%20model%20showing%20muscle%20groups%2C%20interactive%20fitness%20application%20interface%2C%20anatomical%20visualization%2C%20red%20highlights%20on%20muscle%20groups%2C%20modern%20UI%20design%2C%20digital%20fitness%20technology&width=375&height=200&seq=6&orientation=landscape" alt="AR Muscle Viewer" class="w-full h-full object-cover">
+</div>
+<div class="p-5">
+<h3 class="text-2xl font-bold mb-2">AR Muscle Viewer</h3>
+<p class="text-gray-700 mb-4">Explore different muscle groups and discover targeted exercises for each area of your body.</p>
+<button id="launch-ar" class="w-full bg-black text-white py-3 rounded-button font-semibold hover:bg-gray-800 transition-colors flex items-center justify-center cursor-pointer">
+<i class="ri-augmented-reality-line ri-lg mr-2"></i> LAUNCH AR VIEWER
+</button>
+</div>
+</div>
+</section>
+<!-- Store Section -->
+<section id="store" class="px-4 py-10 bg-gray-100 max-w-md mx-auto">
+<h2 class="text-4xl font-bold mb-6 text-black">SHOP</h2>
+<!-- Categories -->
+<div class="flex overflow-x-auto pb-3 mb-6 -mx-4 px-4 space-x-4">
+<button class="store-category whitespace-nowrap px-4 py-2 bg-primary text-white rounded-full text-sm font-medium" data-category="all">All</button>
+<button class="store-category whitespace-nowrap px-4 py-2 bg-white text-gray-700 rounded-full text-sm font-medium" data-category="supplements">Supplements</button>
+<button class="store-category whitespace-nowrap px-4 py-2 bg-white text-gray-700 rounded-full text-sm font-medium" data-category="apparel">Apparel</button>
+<button class="store-category whitespace-nowrap px-4 py-2 bg-white text-gray-700 rounded-full text-sm font-medium" data-category="equipment">Equipment</button>
+</div>
+<!-- Products Grid -->
+<div class="grid grid-cols-2 gap-4" id="products-grid">
+<!-- Product 1 -->
+<div class="product-card bg-white rounded-lg shadow-md overflow-hidden" data-category="supplements">
+<div class="relative">
+<div class="h-40 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=whey%20protein%20powder%20container%2C%20professional%20product%20photography%2C%20clean%20white%20background%2C%20fitness%20supplement%2C%20high%20quality%20packaging%2C%20detailed%20product%20shot&width=180&height=160&seq=7&orientation=squarish" alt="Whey Protein" class="w-full h-full object-cover">
+</div>
+<div class="absolute top-2 right-2 bg-primary text-white text-xs font-bold px-2 py-1 rounded">NEW</div>
+</div>
+<div class="p-3">
+<h3 class="font-bold text-sm mb-1 truncate">Premium Whey Protein</h3>
+<p class="text-gray-600 text-xs mb-2">1kg, Chocolate</p>
+<div class="flex justify-between items-center">
+<span class="font-bold text-primary">₹2,499</span>
+<button class="add-to-cart w-8 h-8 flex items-center justify-center bg-black text-white rounded-full cursor-pointer">
+<i class="ri-shopping-cart-line"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="product-card bg-white rounded-lg shadow-md overflow-hidden" data-category="apparel">
+<div class="h-40 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=fitness%20t-shirt%2C%20black%20with%20red%20logo%2C%20athletic%20wear%2C%20gym%20apparel%2C%20professional%20product%20photography%2C%20clean%20white%20background&width=180&height=160&seq=8&orientation=squarish" alt="Gym T-Shirt" class="w-full h-full object-cover">
+</div>
+<div class="p-3">
+<h3 class="font-bold text-sm mb-1 truncate">Performance T-Shirt</h3>
+<p class="text-gray-600 text-xs mb-2">Black, Size M</p>
+<div class="flex justify-between items-center">
+<span class="font-bold text-primary">₹899</span>
+<button class="add-to-cart w-8 h-8 flex items-center justify-center bg-black text-white rounded-full cursor-pointer">
+<i class="ri-shopping-cart-line"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="product-card bg-white rounded-lg shadow-md overflow-hidden" data-category="equipment">
+<div class="h-40 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=gym%20shaker%20bottle%2C%20black%20and%20red%20colors%2C%20protein%20shaker%20with%20mixing%20ball%2C%20fitness%20accessory%2C%20professional%20product%20photography%2C%20clean%20white%20background&width=180&height=160&seq=9&orientation=squarish" alt="Shaker Bottle" class="w-full h-full object-cover">
+</div>
+<div class="p-3">
+<h3 class="font-bold text-sm mb-1 truncate">Premium Shaker Bottle</h3>
+<p class="text-gray-600 text-xs mb-2">700ml, Black/Red</p>
+<div class="flex justify-between items-center">
+<span class="font-bold text-primary">₹499</span>
+<button class="add-to-cart w-8 h-8 flex items-center justify-center bg-black text-white rounded-full cursor-pointer">
+<i class="ri-shopping-cart-line"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Product 4 -->
+<div class="product-card bg-white rounded-lg shadow-md overflow-hidden" data-category="supplements">
+<div class="h-40 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=pre-workout%20supplement%20container%2C%20energy%20formula%2C%20professional%20product%20photography%2C%20clean%20white%20background%2C%20fitness%20supplement%2C%20high%20quality%20packaging&width=180&height=160&seq=10&orientation=squarish" alt="Pre-Workout" class="w-full h-full object-cover">
+</div>
+<div class="p-3">
+<h3 class="font-bold text-sm mb-1 truncate">Extreme Pre-Workout</h3>
+<p class="text-gray-600 text-xs mb-2">300g, Berry Blast</p>
+<div class="flex justify-between items-center">
+<span class="font-bold text-primary">₹1,799</span>
+<button class="add-to-cart w-8 h-8 flex items-center justify-center bg-black text-white rounded-full cursor-pointer">
+<i class="ri-shopping-cart-line"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Product 5 -->
+<div class="product-card bg-white rounded-lg shadow-md overflow-hidden" data-category="apparel">
+<div class="h-40 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=fitness%20gym%20shorts%2C%20black%20with%20red%20details%2C%20athletic%20wear%2C%20workout%20shorts%2C%20professional%20product%20photography%2C%20clean%20white%20background&width=180&height=160&seq=11&orientation=squarish" alt="Gym Shorts" class="w-full h-full object-cover">
+</div>
+<div class="p-3">
+<h3 class="font-bold text-sm mb-1 truncate">Training Shorts</h3>
+<p class="text-gray-600 text-xs mb-2">Black, Size L</p>
+<div class="flex justify-between items-center">
+<span class="font-bold text-primary">₹799</span>
+<button class="add-to-cart w-8 h-8 flex items-center justify-center bg-black text-white rounded-full cursor-pointer">
+<i class="ri-shopping-cart-line"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Product 6 -->
+<div class="product-card bg-white rounded-lg shadow-md overflow-hidden" data-category="equipment">
+<div class="h-40 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=fitness%20resistance%20bands%20set%2C%20elastic%20exercise%20bands%20with%20different%20resistance%20levels%2C%20workout%20equipment%2C%20professional%20product%20photography%2C%20clean%20white%20background&width=180&height=160&seq=12&orientation=squarish" alt="Resistance Bands" class="w-full h-full object-cover">
+</div>
+<div class="p-3">
+<h3 class="font-bold text-sm mb-1 truncate">Resistance Bands Set</h3>
+<p class="text-gray-600 text-xs mb-2">5 Levels, With Bag</p>
+<div class="flex justify-between items-center">
+<span class="font-bold text-primary">₹1,299</span>
+<button class="add-to-cart w-8 h-8 flex items-center justify-center bg-black text-white rounded-full cursor-pointer">
+<i class="ri-shopping-cart-line"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<a href="https://readdy.ai/home/1c17c62c-55c5-4300-a1cb-c5eefeed5abf/abbc5674-0300-44a5-8c3d-80e782e03a1a" data-readdy="true" class="block">
+<button class="mt-6 w-full bg-black text-white py-3 rounded-button font-semibold hover:bg-gray-800 transition-colors cursor-pointer">VIEW ALL PRODUCTS</button>
+</a>
+</section>
+<!-- Blog Section -->
+<section id="blog" class="px-4 py-10 max-w-md mx-auto">
+<h2 class="text-4xl font-bold mb-6 text-black">FITNESS BLOG</h2>
+<div class="space-y-5">
+<article class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="h-48 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=person%20doing%20deadlift%20in%20gym%2C%20proper%20form%20demonstration%2C%20weight%20training%20technique%2C%20professional%20fitness%20photography%2C%20red%20and%20black%20gym%20environment&width=375&height=200&seq=13&orientation=landscape" alt="Deadlift Article" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-5">
+<div class="flex items-center mb-3">
+<span class="text-xs font-medium bg-red-100 text-primary px-2 py-1 rounded">Technique</span>
+<span class="text-xs text-gray-500 ml-3">May 25, 2025</span>
+</div>
+<h3 class="text-xl font-bold mb-2">Master the Perfect Deadlift: Form Guide</h3>
+<p class="text-gray-700 mb-4">Learn the proper technique for deadlifts to maximize gains while preventing injuries. Our step-by-step guide covers everything from setup to execution.</p>
+<a href="#" class="text-primary font-medium flex items-center hover:underline cursor-pointer">
+Read More <i class="ri-arrow-right-line ml-1"></i>
+</a>
+</div>
+</article>
+<article class="bg-white rounded-lg shadow-md overflow-hidden">
+<div class="h-48 overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=healthy%20meal%20prep%20containers%20with%20protein%2C%20vegetables%20and%20carbs%2C%20nutrition%20planning%2C%20balanced%20diet%20for%20fitness%2C%20professional%20food%20photography&width=375&height=200&seq=14&orientation=landscape" alt="Nutrition Article" class="w-full h-full object-cover object-top">
+</div>
+<div class="p-5">
+<div class="flex items-center mb-3">
+<span class="text-xs font-medium bg-red-100 text-primary px-2 py-1 rounded">Nutrition</span>
+<span class="text-xs text-gray-500 ml-3">May 20, 2025</span>
+</div>
+<h3 class="text-xl font-bold mb-2">5 Meal Prep Strategies for Busy Professionals</h3>
+<p class="text-gray-700 mb-4">Discover time-saving meal preparation techniques that will help you stay on track with your nutrition goals even with a hectic schedule.</p>
+<a href="#" class="text-primary font-medium flex items-center hover:underline cursor-pointer">
+Read More <i class="ri-arrow-right-line ml-1"></i>
+</a>
+</div>
+</article>
+</div>
+<a href="https://readdy.ai/home/1c17c62c-55c5-4300-a1cb-c5eefeed5abf/a6a16c59-b5ea-4595-b207-8d53c76fed4f" data-readdy="true" class="block">
+<button class="mt-6 w-full border border-primary text-primary py-3 rounded-button font-semibold hover:bg-red-50 transition-colors cursor-pointer">VIEW ALL ARTICLES</button>
+</a>
+</section>
+<!-- Contact Section -->
+<section id="contact" class="px-4 py-10 bg-gray-100 max-w-md mx-auto">
+<h2 class="text-4xl font-bold mb-6 text-black">CONTACT US</h2>
+<div class="bg-white rounded-lg shadow-md p-5 mb-6">
+<h3 class="text-xl font-bold mb-4">Get in Touch</h3>
+<form id="contact-form" class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+<input type="text" id="contact-name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Your name" required>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+<input type="email" id="contact-email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Your email" required>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+<input type="tel" id="contact-phone" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Your phone number" required>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+<textarea id="contact-message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="How can we help you?" required></textarea>
+</div>
+<button type="submit" class="w-full bg-primary text-white py-3 rounded-button font-semibold hover:bg-red-700 transition-colors cursor-pointer">SEND MESSAGE</button>
+</form>
+</div>
+<div class="bg-white rounded-lg shadow-md p-5">
+<h3 class="text-xl font-bold mb-4">Visit Our Gym</h3>
+<div class="space-y-4">
+<div class="flex items-start">
+<div class="w-10 h-10 flex items-center justify-center bg-red-100 rounded-full text-primary mt-1">
+<i class="ri-map-pin-line ri-lg"></i>
+</div>
+<div class="ml-4">
+<h4 class="font-bold text-gray-800">Location</h4>
+<p class="text-gray-600">Bellary Road, Opposite Turf Cricket Ground, Guntakal</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="w-10 h-10 flex items-center justify-center bg-red-100 rounded-full text-primary mt-1">
+<i class="ri-time-line ri-lg"></i>
+</div>
+<div class="ml-4">
+<h4 class="font-bold text-gray-800">Hours</h4>
+<p class="text-gray-600">Monday - Friday: 6:00 AM - 10:00 PM</p>
+<p class="text-gray-600">Saturday - Sunday: 8:00 AM - 8:00 PM</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="w-10 h-10 flex items-center justify-center bg-red-100 rounded-full text-primary mt-1">
+<i class="ri-phone-line ri-lg"></i>
+</div>
+<div class="ml-4">
+<h4 class="font-bold text-gray-800">Call Us</h4>
+<p class="text-gray-600">+91 98765 43210</p>
+</div>
+</div>
+</div>
+<div class="mt-6 h-40 rounded-lg overflow-hidden">
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3838.8675968493386!2d77.36472661486328!3d15.817799989035952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb6f4b3c4b4b4b3%3A0x3b3b3b3b3b3b3b3b!2sBellary%20Rd%2C%20Guntakal%2C%20Andhra%20Pradesh%20515801!5e0!3m2!1sen!2sin!4v1621234567890!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+</div>
+</section>
+</main>
+<!-- Tab Bar -->
+<nav class="bg-black text-white fixed w-full bottom-0 z-50">
+<div class="grid grid-cols-5 max-w-md mx-auto">
+<a href="#home" class="flex flex-col items-center justify-center py-2 text-primary">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-home-5-fill ri-lg"></i>
+</div>
+<span class="text-xs mt-1">Home</span>
+</a>
+<a href="#services" class="flex flex-col items-center justify-center py-2 text-gray-400">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-service-line ri-lg"></i>
+</div>
+<span class="text-xs mt-1">Services</span>
+</a>
+<a href="#tools" class="flex flex-col items-center justify-center py-2 text-gray-400">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-calculator-line ri-lg"></i>
+</div>
+<span class="text-xs mt-1">Tools</span>
+</a>
+<a href="#store" class="flex flex-col items-center justify-center py-2 text-gray-400">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-shopping-bag-line ri-lg"></i>
+</div>
+<span class="text-xs mt-1">Shop</span>
+</a>
+<a href="#contact" class="flex flex-col items-center justify-center py-2 text-gray-400">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-chat-1-line ri-lg"></i>
+</div>
+<span class="text-xs mt-1">Contact</span>
+</a>
+</div>
+</nav>
+<!-- Cart Modal -->
+<div id="cart-modal" class="fixed inset-0 z-50 hidden">
+<div class="absolute inset-0 bg-black bg-opacity-50" id="cart-backdrop"></div>
+<div class="absolute bottom-0 left-0 right-0 max-w-md mx-auto bg-white rounded-t-xl transform transition-transform duration-300 translate-y-full" id="cart-content">
+<div class="p-4 border-b">
+<div class="flex justify-between items-center">
+<h3 class="text-xl font-bold">Your Cart</h3>
+<button id="close-cart" class="w-8 h-8 flex items-center justify-center text-gray-500 cursor-pointer">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+</div>
+<div class="p-4 max-h-[400px] overflow-y-auto" id="cart-items">
+<div class="text-center py-8 text-gray-500">
+<div class="w-16 h-16 mx-auto flex items-center justify-center bg-gray-100 rounded-full mb-4">
+<i class="ri-shopping-cart-line ri-2x"></i>
+</div>
+<p>Your cart is empty</p>
+</div>
+</div>
+<div class="p-4 border-t">
+<div class="flex justify-between items-center mb-4">
+<span class="font-bold">Total:</span>
+<span class="font-bold text-primary text-xl" id="cart-total">₹0</span>
+</div>
+<button class="w-full bg-primary text-white py-3 rounded-button font-semibold hover:bg-red-700 transition-colors cursor-pointer">CHECKOUT</button>
+</div>
+</div>
+</div>
+<!-- AR Viewer Modal -->
+<div id="ar-modal" class="fixed inset-0 z-50 hidden">
+<div class="absolute inset-0 bg-black bg-opacity-90"></div>
+<div class="absolute inset-0 flex flex-col">
+<div class="p-4 flex justify-between items-center">
+<h3 class="text-xl font-bold text-white">AR Muscle Viewer</h3>
+<button id="close-ar" class="w-8 h-8 flex items-center justify-center text-white cursor-pointer">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center p-4">
+<div class="relative w-full max-w-[300px] group">
+<img src="https://readdy.ai/api/search-image?query=3D%20human%20body%20model%2C%20anatomical%20visualization%2C%20muscular%20system%2C%20front%20view%2C%20standing%20pose%2C%20fitness%20application%20interface%2C%20interactive%20muscle%20map%2C%20digital%20fitness%20technology%2C%20isolated%20on%20black%20background%2C%20high%20quality%203D%20rendering&width=300&height=400&seq=15&orientation=portrait" alt="Human Body Model" class="w-full rounded-lg shadow-2xl">
+<div class="absolute inset-0 bg-gradient-to-b from-black/10 to-black/30 rounded-lg"></div>
+<!-- Muscle Group Hotspots -->
+<div class="absolute top-[15%] left-[30%] muscle-hotspot" data-muscle="shoulders">
+<div class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-70 backdrop-blur-sm rounded-full cursor-pointer animate-pulse hover:bg-opacity-100 hover:scale-110 transition-all duration-300">
+<i class="ri-add-line ri-lg text-white"></i>
+</div>
+<div class="absolute left-full ml-2 bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full text-white text-xs whitespace-nowrap opacity-0 translate-x-2 pointer-events-none transition-all duration-300">Shoulders</div>
+</div>
+<div class="absolute top-[25%] left-[30%] muscle-hotspot" data-muscle="chest">
+<div class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-70 backdrop-blur-sm rounded-full cursor-pointer animate-pulse hover:bg-opacity-100 hover:scale-110 transition-all duration-300">
+<i class="ri-add-line ri-lg text-white"></i>
+</div>
+<div class="absolute left-full ml-2 bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full text-white text-xs whitespace-nowrap opacity-0 translate-x-2 pointer-events-none transition-all duration-300">Chest Muscles</div>
+</div>
+<div class="absolute top-[35%] left-[22%] muscle-hotspot" data-muscle="biceps">
+<div class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-70 backdrop-blur-sm rounded-full cursor-pointer animate-pulse hover:bg-opacity-100 hover:scale-110 transition-all duration-300">
+<i class="ri-add-line ri-lg text-white"></i>
+</div>
+<div class="absolute left-full ml-2 bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full text-white text-xs whitespace-nowrap opacity-0 translate-x-2 pointer-events-none transition-all duration-300">Biceps</div>
+</div>
+<div class="absolute top-[35%] right-[22%] muscle-hotspot" data-muscle="triceps">
+<div class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-70 backdrop-blur-sm rounded-full cursor-pointer animate-pulse hover:bg-opacity-100 hover:scale-110 transition-all duration-300">
+<i class="ri-add-line ri-lg text-white"></i>
+</div>
+<div class="absolute right-full mr-2 bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full text-white text-xs whitespace-nowrap opacity-0 -translate-x-2 pointer-events-none transition-all duration-300">Triceps</div>
+</div>
+<div class="absolute top-[45%] left-[30%] muscle-hotspot" data-muscle="abs">
+<div class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-70 backdrop-blur-sm rounded-full cursor-pointer animate-pulse hover:bg-opacity-100 hover:scale-110 transition-all duration-300">
+<i class="ri-add-line ri-lg text-white"></i>
+</div>
+<div class="absolute left-full ml-2 bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full text-white text-xs whitespace-nowrap opacity-0 translate-x-2 pointer-events-none transition-all duration-300">Abdominal Muscles</div>
+</div>
+<div class="absolute top-[60%] left-[35%] muscle-hotspot" data-muscle="quads">
+<div class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-70 backdrop-blur-sm rounded-full cursor-pointer animate-pulse hover:bg-opacity-100 hover:scale-110 transition-all duration-300">
+<i class="ri-add-line ri-lg text-white"></i>
+</div>
+<div class="absolute left-full ml-2 bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full text-white text-xs whitespace-nowrap opacity-0 translate-x-2 pointer-events-none transition-all duration-300">Quadriceps</div>
+</div>
+<div class="absolute top-[80%] left-[35%] muscle-hotspot" data-muscle="calves">
+<div class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-70 backdrop-blur-sm rounded-full cursor-pointer animate-pulse hover:bg-opacity-100 hover:scale-110 transition-all duration-300">
+<i class="ri-add-line ri-lg text-white"></i>
+</div>
+<div class="absolute left-full ml-2 bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full text-white text-xs whitespace-nowrap opacity-0 translate-x-2 pointer-events-none transition-all duration-300">Calves</div>
+</div>
+<div class="absolute top-[30%] right-[35%] muscle-hotspot" data-muscle="back">
+<div class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-70 backdrop-blur-sm rounded-full cursor-pointer animate-pulse hover:bg-opacity-100 hover:scale-110 transition-all duration-300">
+<i class="ri-add-line ri-lg text-white"></i>
+</div>
+<div class="absolute right-full mr-2 bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full text-white text-xs whitespace-nowrap opacity-0 -translate-x-2 pointer-events-none transition-all duration-300">Back Muscles</div>
+</div>
+</div>
+<div id="muscle-info" class="mt-6 p-4 bg-white/10 backdrop-blur-md rounded-xl text-white w-full max-w-[300px] hidden transform transition-all duration-300 scale-95 opacity-0">
+<div class="flex items-center justify-between mb-3">
+<h4 id="muscle-name" class="text-lg font-bold line-clamp-1">Chest Muscles</h4>
+<div class="w-8 h-8 flex items-center justify-center bg-primary/20 rounded-full">
+<i class="ri-heart-pulse-line"></i>
+</div>
+</div>
+<p id="muscle-description" class="text-xs mb-3 line-clamp-3">The chest muscles (pectoralis major and minor) are responsible for pushing movements and are essential for upper body strength.</p>
+<div>
+<h5 class="text-sm font-bold mb-2 flex items-center">
+<i class="ri-fitness-line mr-2"></i>
+Key Exercises
+</h5>
+<div class="grid grid-cols-2 gap-2">
+<div id="muscle-exercises" class="col-span-2 grid grid-cols-2 gap-2 text-xs">
+<div class="bg-black/20 rounded-lg p-2 flex items-center">
+<div class="w-1 h-1 bg-primary rounded-full mr-2"></div>
+<span class="truncate">Bench Press</span>
+</div>
+<div class="bg-black/20 rounded-lg p-2 flex items-center">
+<div class="w-1 h-1 bg-primary rounded-full mr-2"></div>
+<span class="truncate">Push-ups</span>
+</div>
+<div class="bg-black/20 rounded-lg p-2 flex items-center">
+<div class="w-1 h-1 bg-primary rounded-full mr-2"></div>
+<span class="truncate">Chest Flyes</span>
+</div>
+<div class="bg-black/20 rounded-lg p-2 flex items-center">
+<div class="w-1 h-1 bg-primary rounded-full mr-2"></div>
+<span class="truncate">Cable Cross</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Success Message Toast -->
+<div id="success-toast" class="fixed top-16 left-0 right-0 max-w-md mx-auto bg-green-500 text-white p-4 rounded-lg shadow-lg transform transition-transform duration-300 translate-y-[-200%] opacity-0 z-50">
+<div class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-3">
+<i class="ri-check-line ri-lg"></i>
+</div>
+<p id="toast-message">Message sent successfully!</p>
+</div>
+</div>
+<!-- Splash Screen Script -->
+<script id="splash-screen-script">
+document.addEventListener('DOMContentLoaded', function() {
+const splashScreen = document.getElementById('splash-screen');
+const progressBar = document.getElementById('progress');
+const progressText = document.getElementById('progress-text');
+const enterBtn = document.getElementById('enter-btn');
+let progress = 0;
+const interval = setInterval(() => {
+progress += Math.floor(Math.random() * 10) + 1;
+if (progress > 100) progress = 100;
+progressBar.style.width = `${progress}%`;
+progressText.textContent = `Loading... ${progress}%`;
+if (progress === 100) {
+clearInterval(interval);
+progressText.textContent = 'Ready!';
+enterBtn.classList.remove('hidden');
+}
+}, 200);
+enterBtn.addEventListener('click', () => {
+splashScreen.style.opacity = '0';
+setTimeout(() => {
+splashScreen.style.display = 'none';
+}, 500);
+});
+});
+</script>
+<!-- Navigation Script -->
+<script id="navigation-script">
+document.addEventListener('DOMContentLoaded', function() {
+const menuToggle = document.getElementById('menu-toggle');
+const mobileMenu = document.getElementById('mobile-menu');
+const navLinks = document.querySelectorAll('#mobile-menu a');
+menuToggle.addEventListener('click', () => {
+mobileMenu.classList.toggle('hidden');
+});
+navLinks.forEach(link => {
+link.addEventListener('click', () => {
+mobileMenu.classList.add('hidden');
+});
+});
+// Tab bar active state
+const tabLinks = document.querySelectorAll('nav a');
+function setActiveTab() {
+const scrollPosition = window.scrollY;
+document.querySelectorAll('section').forEach(section => {
+const sectionTop = section.offsetTop - 100;
+const sectionBottom = sectionTop + section.offsetHeight;
+const sectionId = section.getAttribute('id');
+if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+tabLinks.forEach(link => {
+link.classList.remove('text-primary');
+link.classList.add('text-gray-400');
+if (link.getAttribute('href') === `#${sectionId}`) {
+link.classList.remove('text-gray-400');
+link.classList.add('text-primary');
+}
+});
+}
+});
+}
+window.addEventListener('scroll', setActiveTab);
+setActiveTab();
+});
+</script>
+<!-- Calculator Tools Script -->
+<script id="calculator-tools-script">
+document.addEventListener('DOMContentLoaded', function() {
+// Tab Switching
+const tabBtns = document.querySelectorAll('.tab-btn');
+const tabContents = document.querySelectorAll('.tab-content');
+tabBtns.forEach(btn => {
+btn.addEventListener('click', () => {
+const tabId = btn.getAttribute('data-tab');
+tabBtns.forEach(b => {
+b.classList.remove('bg-primary', 'text-white');
+b.classList.add('text-gray-700');
+});
+btn.classList.add('bg-primary', 'text-white');
+btn.classList.remove('text-gray-700');
+tabContents.forEach(content => {
+content.classList.remove('active');
+});
+document.getElementById(`${tabId}-tab`).classList.add('active');
+});
+});
+// BMI Calculator
+const bmiForm = document.getElementById('bmi-form');
+const bmiResult = document.getElementById('bmi-result');
+const bmiValue = document.getElementById('bmi-value');
+const bmiCategory = document.getElementById('bmi-category');
+const bmiAdvice = document.getElementById('bmi-advice');
+bmiForm.addEventListener('submit', (e) => {
+e.preventDefault();
+const height = parseFloat(document.getElementById('bmi-height').value) / 100; // convert to meters
+const weight = parseFloat(document.getElementById('bmi-weight').value);
+if (height && weight) {
+const bmi = (weight / (height * height)).toFixed(1);
+bmiValue.textContent = bmi;
+let category, advice;
+if (bmi < 18.5) {
+category = 'Underweight';
+advice = 'Consider increasing your caloric intake with nutrient-dense foods and incorporate strength training to build muscle mass.';
+} else if (bmi >= 18.5 && bmi < 25) {
+category = 'Normal weight';
+advice = 'Maintain your healthy lifestyle with a balanced diet and regular exercise to stay within this range.';
+} else if (bmi >= 25 && bmi < 30) {
+category = 'Overweight';
+advice = 'Focus on portion control, increasing physical activity, and reducing processed foods to achieve a healthier weight.';
+} else {
+category = 'Obese';
+advice = 'Consider consulting with a healthcare professional for a personalized weight management plan.';
+}
+bmiCategory.textContent = category;
+bmiAdvice.textContent = advice;
+bmiResult.classList.remove('hidden');
+}
+});
+// 1RM Calculator
+const oneRMForm = document.getElementById('oneRM-form');
+const oneRMResult = document.getElementById('oneRM-result');
+const oneRMValue = document.getElementById('oneRM-value');
+const percent65 = document.getElementById('percent-65');
+const percent75 = document.getElementById('percent-75');
+const percent85 = document.getElementById('percent-85');
+oneRMForm.addEventListener('submit', (e) => {
+e.preventDefault();
+const weight = parseFloat(document.getElementById('weight-lifted').value);
+const reps = parseInt(document.getElementById('reps-performed').value);
+if (weight && reps) {
+// Brzycki Formula: 1RM = weight × (36 / (37 - reps))
+const oneRM = (weight * (36 / (37 - reps))).toFixed(1);
+oneRMValue.textContent = oneRM;
+percent65.textContent = (oneRM * 0.65).toFixed(1) + ' kg';
+percent75.textContent = (oneRM * 0.75).toFixed(1) + ' kg';
+percent85.textContent = (oneRM * 0.85).toFixed(1) + ' kg';
+oneRMResult.classList.remove('hidden');
+}
+});
+// Macro Calculator
+const macroForm = document.getElementById('macro-form');
+const macroResult = document.getElementById('macro-result');
+const caloriesValue = document.getElementById('calories-value');
+const proteinValue = document.getElementById('protein-value');
+const carbsValue = document.getElementById('carbs-value');
+const fatValue = document.getElementById('fat-value');
+macroForm.addEventListener('submit', (e) => {
+e.preventDefault();
+const weight = parseFloat(document.getElementById('macro-weight').value);
+const goal = document.getElementById('macro-goal').value;
+const activityLevel = parseFloat(document.getElementById('activity-level').value);
+if (weight && goal && activityLevel) {
+// Base calculation (simplified)
+let calories = Math.round(weight * 24 * activityLevel);
+let protein = Math.round(weight * 2.2); // 2.2g per kg
+let fat, carbs;
+// Adjust based on goal
+if (goal === 'lose') {
+calories = Math.round(calories * 0.8); // 20% deficit
+fat = Math.round((calories * 0.25) / 9); // 25% of calories from fat
+} else if (goal === 'maintain') {
+fat = Math.round((calories * 0.3) / 9); // 30% of calories from fat
+} else if (goal === 'gain') {
+calories = Math.round(calories * 1.1); // 10% surplus
+fat = Math.round((calories * 0.3) / 9); // 30% of calories from fat
+}
+// Calculate carbs (remaining calories)
+const proteinCalories = protein * 4;
+const fatCalories = fat * 9;
+carbs = Math.round((calories - proteinCalories - fatCalories) / 4);
+// Update UI
+caloriesValue.textContent = calories;
+proteinValue.textContent = protein;
+carbsValue.textContent = carbs;
+fatValue.textContent = fat;
+macroResult.classList.remove('hidden');
+}
+});
+});
+</script>
+<!-- Store Script -->
+<script id="store-script">
+document.addEventListener('DOMContentLoaded', function() {
+const categoryBtns = document.querySelectorAll('.store-category');
+const products = document.querySelectorAll('.product-card');
+const cartBtn = document.querySelectorAll('.add-to-cart');
+const cartModal = document.getElementById('cart-modal');
+const cartContent = document.getElementById('cart-content');
+const cartBackdrop = document.getElementById('cart-backdrop');
+const closeCartBtn = document.getElementById('close-cart');
+const cartItems = document.getElementById('cart-items');
+const cartTotal = document.getElementById('cart-total');
+let cart = [];
+// Category filtering
+categoryBtns.forEach(btn => {
+btn.addEventListener('click', () => {
+const category = btn.getAttribute('data-category');
+categoryBtns.forEach(b => {
+b.classList.remove('bg-primary', 'text-white');
+b.classList.add('bg-white', 'text-gray-700');
+});
+btn.classList.add('bg-primary', 'text-white');
+btn.classList.remove('bg-white', 'text-gray-700');
+products.forEach(product => {
+if (category === 'all' || product.getAttribute('data-category') === category) {
+product.classList.remove('hidden');
+} else {
+product.classList.add('hidden');
+}
+});
+});
+});
+// Cart functionality
+cartBtn.forEach(btn => {
+btn.addEventListener('click', () => {
+const product = btn.closest('.product-card');
+const name = product.querySelector('h3').textContent;
+const variant = product.querySelector('p').textContent;
+const price = product.querySelector('.font-bold').textContent.replace('₹', '');
+const image = product.querySelector('img').src;
+// Add to cart
+cart.push({
+name,
+variant,
+price: parseInt(price),
+image,
+quantity: 1
+});
+updateCart();
+openCart();
+// Show toast
+showToast('Added to cart!');
+});
+});
+function updateCart() {
+if (cart.length === 0) {
+cartItems.innerHTML = `
+<div class="text-center py-8 text-gray-500">
+<div class="w-16 h-16 mx-auto flex items-center justify-center bg-gray-100 rounded-full mb-4">
+<i class="ri-shopping-cart-line ri-2x"></i>
+</div>
+<p>Your cart is empty</p>
+</div>
+`;
+cartTotal.textContent = '₹0';
+return;
+}
+let total = 0;
+let html = '';
+cart.forEach((item, index) => {
+total += item.price * item.quantity;
+html += `
+<div class="flex items-center py-3 ${index < cart.length - 1 ? 'border-b' : ''}">
+<div class="w-16 h-16 flex-shrink-0 rounded overflow-hidden">
+<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+</div>
+<div class="ml-4 flex-1">
+<h4 class="font-bold text-sm">${item.name}</h4>
+<p class="text-xs text-gray-500">${item.variant}</p>
+<div class="flex justify-between items-center mt-2">
+<span class="font-bold text-primary">₹${item.price}</span>
+<div class="flex items-center">
+<button class="w-6 h-6 flex items-center justify-center bg-gray-100 rounded-full text-gray-600 cart-decrease" data-index="${index}">-</button>
+<span class="mx-2 text-sm">${item.quantity}</span>
+<button class="w-6 h-6 flex items-center justify-center bg-gray-100 rounded-full text-gray-600 cart-increase" data-index="${index}">+</button>
+</div>
+</div>
+</div>
+</div>
+`;
+});
+cartItems.innerHTML = html;
+cartTotal.textContent = `₹${total}`;
+// Add event listeners for quantity buttons
+document.querySelectorAll('.cart-decrease').forEach(btn => {
+btn.addEventListener('click', () => {
+const index = parseInt(btn.getAttribute('data-index'));
+if (cart[index].quantity > 1) {
+cart[index].quantity--;
+} else {
+cart.splice(index, 1);
+}
+updateCart();
+});
+});
+document.querySelectorAll('.cart-increase').forEach(btn => {
+btn.addEventListener('click', () => {
+const index = parseInt(btn.getAttribute('data-index'));
+cart[index].quantity++;
+updateCart();
+});
+});
+}
+function openCart() {
+cartModal.classList.remove('hidden');
+setTimeout(() => {
+cartContent.classList.remove('translate-y-full');
+}, 10);
+}
+function closeCart() {
+cartContent.classList.add('translate-y-full');
+setTimeout(() => {
+cartModal.classList.add('hidden');
+}, 300);
+}
+closeCartBtn.addEventListener('click', closeCart);
+cartBackdrop.addEventListener('click', closeCart);
+});
+</script>
+<!-- AR Viewer Script -->
+<script id="ar-viewer-script">
+document.addEventListener('DOMContentLoaded', function() {
+const launchARBtn = document.getElementById('launch-ar');
+const arModal = document.getElementById('ar-modal');
+const closeARBtn = document.getElementById('close-ar');
+const muscleHotspots = document.querySelectorAll('[data-muscle]');
+const muscleInfo = document.getElementById('muscle-info');
+const muscleName = document.getElementById('muscle-name');
+const muscleDescription = document.getElementById('muscle-description');
+const muscleExercises = document.getElementById('muscle-exercises');
+const muscleData = {
+shoulders: {
+name: 'Shoulder Muscles',
+description: 'The shoulder muscles (deltoids) are composed of three heads - anterior, lateral, and posterior. They are crucial for arm movement and shoulder stability.',
+exercises: [
+'Overhead Press',
+'Lateral Raises',
+'Front Raises',
+'Face Pulls'
+]
+},
+chest: {
+name: 'Chest Muscles',
+description: 'The chest muscles (pectoralis major and minor) are responsible for pushing movements and are essential for upper body strength.',
+exercises: [
+'Bench Press',
+'Push-ups',
+'Chest Flyes',
+'Cable Crossovers'
+]
+},
+biceps: {
+name: 'Biceps',
+description: 'The biceps brachii is a two-headed muscle located on the upper arm between the shoulder and elbow that flexes the elbow and supinates the forearm.',
+exercises: [
+'Bicep Curls',
+'Hammer Curls',
+'Chin-ups',
+'Concentration Curls'
+]
+},
+abs: {
+name: 'Abdominal Muscles',
+description: 'The abdominal muscles include the rectus abdominis, obliques, and transverse abdominis, which stabilize the core and assist in trunk flexion.',
+exercises: [
+'Crunches',
+'Planks',
+'Leg Raises',
+'Russian Twists'
+]
+},
+quads: {
+name: 'Quadriceps',
+description: 'The quadriceps femoris is a group of four muscles located in the front of the thigh that extend the knee and are crucial for walking, running, and jumping.',
+exercises: [
+'Squats',
+'Leg Press',
+'Lunges',
+'Leg Extensions'
+]
+},
+triceps: {
+name: 'Triceps',
+description: 'The triceps brachii is a three-headed muscle located on the back of the upper arm, responsible for extending the elbow and stabilizing the shoulder.',
+exercises: [
+'Tricep Pushdowns',
+'Skull Crushers',
+'Diamond Push-ups',
+'Overhead Extensions'
+]
+},
+calves: {
+name: 'Calf Muscles',
+description: 'The calf muscles (gastrocnemius and soleus) are located on the back of the lower leg. They are essential for walking, running, and jumping movements.',
+exercises: [
+'Calf Raises',
+'Jump Rope',
+'Box Jumps',
+'Hill Sprints'
+]
+},
+back: {
+name: 'Back Muscles',
+description: 'The back muscles include the latissimus dorsi, trapezius, and rhomboids. They are crucial for pulling movements, posture, and overall upper body strength.',
+exercises: [
+'Pull-ups',
+'Rows',
+'Deadlifts',
+'Lat Pulldowns'
+]
+}
+};
+launchARBtn.addEventListener('click', () => {
+arModal.classList.remove('hidden');
+});
+closeARBtn.addEventListener('click', () => {
+arModal.classList.add('hidden');
+muscleInfo.classList.add('hidden');
+});
+muscleHotspots.forEach(hotspot => {
+hotspot.addEventListener('click', () => {
+const muscle = hotspot.getAttribute('data-muscle');
+const data = muscleData[muscle];
+muscleName.textContent = data.name;
+muscleDescription.textContent = data.description;
+let exercisesHTML = '';
+data.exercises.forEach(exercise => {
+exercisesHTML += `<li>• ${exercise}</li>`;
+});
+muscleExercises.innerHTML = exercisesHTML;
+muscleInfo.classList.remove('hidden');
+setTimeout(() => {
+muscleInfo.classList.add('active');
+}, 10);
+});
+});
+// Add click event to close muscle info when clicking outside
+document.addEventListener('click', (e) => {
+if (!e.target.closest('.muscle-hotspot') && !e.target.closest('#muscle-info')) {
+const muscleInfo = document.getElementById('muscle-info');
+muscleInfo.classList.remove('active');
+setTimeout(() => {
+muscleInfo.classList.add('hidden');
+}, 300);
+}
+});
+});
+</script>
+<!-- Contact Form Script -->
+<script id="contact-form-script">
+document.addEventListener('DOMContentLoaded', function() {
+const contactForm = document.getElementById('contact-form');
+const successToast = document.getElementById('success-toast');
+const toastMessage = document.getElementById('toast-message');
+contactForm.addEventListener('submit', (e) => {
+e.preventDefault();
+const name = document.getElementById('contact-name').value;
+const email = document.getElementById('contact-email').value;
+const phone = document.getElementById('contact-phone').value;
+const message = document.getElementById('contact-message').value;
+// Simulate form submission
+setTimeout(() => {
+// Reset form
+contactForm.reset();
+// Show success message
+showToast('Message sent successfully! We\'ll get back to you soon.');
+}, 1000);
+});
+});
+function showToast(message) {
+const toast = document.getElementById('success-toast');
+const toastMessage = document.getElementById('toast-message');
+toastMessage.textContent = message;
+toast.style.transform = 'translateY(0)';
+toast.style.opacity = '1';
+setTimeout(() => {
+toast.style.transform = 'translateY(-200%)';
+toast.style.opacity = '0';
+}, 3000);
+}
+</script>
+</body>
+</html>
